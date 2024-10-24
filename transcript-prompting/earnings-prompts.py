@@ -160,7 +160,7 @@ class EarningsAnalyzer:
                 json.dump(results, f, indent=2, ensure_ascii=False)
             print(f"\nAnalysis saved to {filename}")
         except Exception as e:
-            print(f"\nError saving analysis: {str(e)}")
+            print(f"\nError saving analysis: {str(e)}") 
 
 def main():
     # Initialize analyzer

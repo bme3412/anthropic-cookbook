@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Earnings Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {# Define macros at the top of the template #}
+    {% macro safe_get(dict_obj, key, default='') %}
+        {% if dict_obj is mapping and key in dict_obj %}
+            {{ dict_obj[key] }}
+        {% else %}
+            {{ default }}
+        {% endif %}
+    {% endmacro %}
+
+    {% macro render_metric(title, value, change=none, quote=none) %}
+        <div class="metric-mini">
+            <div class="small text-muted">{{ title }}</div>
+            <div class="fw-bold">{{ value }}</div>
+            {% if change %}
+                <div class="small {{ 'text-success' if change.startswith('+') else 'text-danger' }}">
+                    {{ change }}
+                </div>
+            {% endif %}
+            {% if quote %}
+                <div class="source-quote-mini">{{ quote }}</div>
+            {% endif %}
+        </div>
+    {% endmacro %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="bi bi-graph-up-arrow me-2"></i>AI Analysis</a>
+        </div>
+    </nav>
+
+    <div class="container my-2">
+        <div class="control-panel">
+            <form method="POST" class="row g-2">
+                <div class="col-5">
+                    <select name="ticker" id="ticker" class="form-select form-select-sm">
+                        {% for ticker in tickers %}
+                            <option value="{{ ticker }}" {% if selected_ticker == ticker %}selected{% endif %}>{{ ticker }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-5">
+                    <select name="view_type" id="view_type" class="form-select form-select-sm">
+                        <option value="raw" {% if view_type == 'raw' %}selected{% endif %}>Raw Transcript</option>
+                        <option value="extracted" {% if view_type == 'extracted' %}selected{% endif %}>Analysis</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">Analyze</button>
+                </div>
+            </form>
+        </div>
+
+        {% if not transcript_data.error and view_type == 'extracted' %}
+            <div class="compact-grid">
+                <!-- Financial Overview -->
+                {% if metrics.financial_overview and metrics.financial_overview.key_metrics %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-cash-stack me-1"></i>Financials
+                        </div>
+                        <div class="compact-metrics">
+                            {% for key, value in metrics.financial_overview.key_metrics.items() %}
+                                {% if value is mapping %}
+                                    {{ render_metric(
+                                        key | replace('_', ' ') | title,
+                                        safe_get(value, 'amount'),
+                                        safe_get(value, 'growth'),
+                                        safe_get(value, 'source_quote')
+                                    ) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- AI Initiatives -->
+                {% if metrics.ai_initiatives and metrics.ai_initiatives.core_strategy %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-robot me-1"></i>AI Initiatives
+                        </div>
+                        <div class="info-grid">
+                            {% for initiative in metrics.ai_initiatives.core_strategy.initiatives | default([]) %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">{{ safe_get(initiative, 'description') }}</div>
+                                    {% if initiative is mapping and 'timeline' in initiative %}
+                                        <div class="small text-primary">{{ initiative.timeline }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Features & Products -->
+                {% if metrics.ai_initiatives and metrics.ai_initiatives.products_and_features %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-gear me-1"></i>Features
+                        </div>
+                        <div class="info-grid">
+                            {% for product in metrics.ai_initiatives.products_and_features.current | default([]) %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">{{ safe_get(product, 'name') }}</div>
+                                    <div class="small">{{ safe_get(product, 'description') }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Market Analysis -->
+                {% if metrics.market_analysis %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-graph-up me-1"></i>Market & Risk
+                        </div>
+                        <div class="info-grid">
+                            {% for strength in metrics.market_analysis.competitive_position.strengths | default([]) %}
+                                <div class="metric-mini">
+                                    <div class="small">{{ strength }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Summary -->
+                {% if metrics.summary_metrics %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-clock-history me-1"></i>Summary
+                        </div>
+                        <div class="d-flex flex-wrap gap-1">
+                            {% for theme in metrics.summary_metrics.key_themes | default([]) %}
+                                <span class="badge bg-primary bg-opacity-10 text-primary">{{ theme }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% elif view_type == 'raw' %}
+            <div class="compact-card">
+                <pre class="small m-0" style="max-height:600px;overflow-y:auto">{{ transcript_data.content | safe }}</pre>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
