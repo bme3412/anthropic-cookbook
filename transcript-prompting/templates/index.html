@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Earnings Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    {# Define macros at the top of the template #}
+    {% macro safe_get(dict_obj, key, default='') %}
+        {% if dict_obj is mapping and key in dict_obj %}
+            {{ dict_obj[key] }}
+        {% else %}
+            {{ default }}
+        {% endif %}
+    {% endmacro %}
+
+    {% macro render_metric(title, value, change=none, quote=none) %}
+        <div class="metric-mini">
+            <div class="small text-muted">{{ title }}</div>
+            <div class="fw-bold">{{ value }}</div>
+            {% if change %}
+                <div class="small {{ 'text-success' if change.startswith('+') else 'text-danger' }}">
+                    {{ change }}
+                </div>
+            {% endif %}
+            {% if quote %}
+                <div class="source-quote-mini">{{ quote }}</div>
+            {% endif %}
+        </div>
+    {% endmacro %}
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="bi bi-graph-up-arrow me-2"></i>AI Analysis</a>
+        </div>
+    </nav>
+
+    <div class="container my-2">
+        <div class="control-panel">
+            <form method="POST" class="row g-2">
+                <div class="col-5">
+                    <select name="ticker" id="ticker" class="form-select form-select-sm">
+                        {% for ticker in tickers %}
+                            <option value="{{ ticker }}" {% if selected_ticker == ticker %}selected{% endif %}>{{ ticker }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-5">
+                    <select name="view_type" id="view_type" class="form-select form-select-sm">
+                        <option value="raw" {% if view_type == 'raw' %}selected{% endif %}>Raw Transcript</option>
+                        <option value="extracted" {% if view_type == 'extracted' %}selected{% endif %}>Analysis</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary btn-sm w-100">Analyze</button>
+                </div>
+            </form>
+        </div>
+
+        {% if not transcript_data.error and view_type == 'extracted' %}
+            <div class="compact-grid">
+                <!-- Financial Overview -->
+                {% if metrics.financial_overview and metrics.financial_overview.key_metrics %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-cash-stack me-1"></i>Financial Overview
+                        </div>
+                        <div class="compact-metrics">
+                            {% for key, value in metrics.financial_overview.key_metrics.items() %}
+                                {% if value is mapping %}
+                                    {{ render_metric(
+                                        key | replace('_', ' ') | title,
+                                        safe_get(value, 'amount'),
+                                        safe_get(value, 'growth'),
+                                        safe_get(value, 'source_quote')
+                                    ) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Segment Performance -->
+                {% if metrics.financial_overview and metrics.financial_overview.segment_performance %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-bar-chart me-1"></i>Segment Performance
+                        </div>
+                        <div class="info-grid">
+                            {% for segment in metrics.financial_overview.segment_performance %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">{{ segment.name }}</div>
+                                    <div class="small">Revenue: {{ segment.revenue }}</div>
+                                    <div class="small">Growth: {{ segment.growth }}</div>
+                                    <div class="small">Operating Margin: {{ segment.operating_margin }}</div>
+                                    <div class="small">Key Products: {{ segment.key_products | join(', ') }}</div>
+                                    <div class="small">Highlights: {{ segment.highlights | join(', ') }}</div>
+                                    {% if segment.source_quote %}
+                                        <div class="source-quote-mini">{{ segment.source_quote }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Guidance -->
+                {% if metrics.financial_overview and metrics.financial_overview.guidance %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-graph-up-arrow me-1"></i>Guidance
+                        </div>
+                        <div class="info-grid">
+                            {% for period, guidance in metrics.financial_overview.guidance.items() %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">{{ period.replace('_', ' ').title() }}</div>
+                                    <div class="small">Revenue Range: {{ guidance.revenue_range }}</div>
+                                    <div class="small">Growth Range: {{ guidance.growth_range }}</div>
+                                    <div class="small">Operating Margin Range: {{ guidance.operating_margin }}</div>
+                                    <div class="small">Key Drivers: {{ guidance.key_drivers | join(', ') }}</div>
+                                    <div class="small">Assumptions: {{ guidance.assumptions | join(', ') }}</div>
+                                    {% if guidance.source_quote %}
+                                        <div class="source-quote-mini">{{ guidance.source_quote }}</div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- AI Initiatives -->
+                {% if metrics.ai_initiatives %}
+                    <!-- Core Strategy -->
+                    {% if metrics.ai_initiatives.core_strategy and metrics.ai_initiatives.core_strategy.initiatives %}
+                        <div class="compact-card">
+                            <div class="compact-header">
+                                <i class="bi bi-robot me-1"></i>AI Core Strategy
+                            </div>
+                            <div class="info-grid">
+                                {% for initiative in metrics.ai_initiatives.core_strategy.initiatives %}
+                                    <div class="metric-mini">
+                                        <div class="fw-bold small">{{ initiative.name }}</div>
+                                        <div class="small">{{ initiative.description }}</div>
+                                        <div class="small">Stage: {{ initiative.stage.replace('_', ' ').title() }}</div>
+                                        <div class="small">Timeline: {{ initiative.timeline }}</div>
+                                        <div class="small">Investment: {{ initiative.investment_size }}</div>
+                                        <div class="small">Expected Impact: {{ initiative.expected_impact }}</div>
+                                        {% if initiative.key_metrics %}
+                                            <div class="small">Key Metrics: {{ initiative.key_metrics | join(', ') }}</div>
+                                        {% endif %}
+                                        {% if initiative.source_quote %}
+                                            <div class="source-quote-mini">{{ initiative.source_quote }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Products and Features -->
+                    {% if metrics.ai_initiatives.products_and_features %}
+                        <!-- Current Products -->
+                        {% if metrics.ai_initiatives.products_and_features.current %}
+                            <div class="compact-card">
+                                <div class="compact-header">
+                                    <i class="bi bi-gear me-1"></i>Current Products
+                                </div>
+                                <div class="info-grid">
+                                    {% for product in metrics.ai_initiatives.products_and_features.current %}
+                                        <div class="metric-mini">
+                                            <div class="fw-bold small">{{ product.name }}</div>
+                                            <div class="small">{{ product.description }}</div>
+                                            <div class="small">Launch Date: {{ product.launch_date }}</div>
+                                            <div class="small">Adoption Metrics: {{ product.adoption_metrics }}</div>
+                                            <div class="small">Market Position: {{ product.market_position }}</div>
+                                            <div class="small">Revenue Impact: {{ product.revenue_impact }}</div>
+                                            <div class="small">Growth Rate: {{ product.growth_rate }}</div>
+                                            {% if product.source_quote %}
+                                                <div class="source-quote-mini">{{ product.source_quote }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Planned Products -->
+                        {% if metrics.ai_initiatives.products_and_features.planned %}
+                            <div class="compact-card">
+                                <div class="compact-header">
+                                    <i class="bi bi-gear-fill me-1"></i>Planned Products
+                                </div>
+                                <div class="info-grid">
+                                    {% for product in metrics.ai_initiatives.products_and_features.planned %}
+                                        <div class="metric-mini">
+                                            <div class="fw-bold small">{{ product.name }}</div>
+                                            <div class="small">{{ product.description }}</div>
+                                            <div class="small">Target Launch: {{ product.target_launch }}</div>
+                                            <div class="small">Development Stage: {{ product.development_stage }}</div>
+                                            <div class="small">Target Market: {{ product.target_market }}</div>
+                                            <div class="small">Expected Impact: {{ product.expected_impact }}</div>
+                                            <div class="small">Dependencies: {{ product.dependencies | join(', ') }}</div>
+                                            {% if product.source_quote %}
+                                                <div class="source-quote-mini">{{ product.source_quote }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- Partnerships -->
+                    {% if metrics.ai_initiatives.partnerships %}
+                        <!-- Current Partnerships -->
+                        {% if metrics.ai_initiatives.partnerships.current %}
+                            <div class="compact-card">
+                                <div class="compact-header">
+                                    <i class="bi bi-handshake me-1"></i>Current Partnerships
+                                </div>
+                                <div class="info-grid">
+                                    {% for partner in metrics.ai_initiatives.partnerships.current %}
+                                        <div class="metric-mini">
+                                            <div class="fw-bold small">{{ partner.partner }}</div>
+                                            <div class="small">{{ partner.description }}</div>
+                                            <div class="small">Start Date: {{ partner.start_date }}</div>
+                                            <div class="small">Scope: {{ partner.scope }}</div>
+                                            <div class="small">Deal Terms: {{ partner.deal_terms }}</div>
+                                            <div class="small">Strategic Value: {{ partner.strategic_value }}</div>
+                                            {% if partner.source_quote %}
+                                                <div class="source-quote-mini">{{ partner.source_quote }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Strategic Investments -->
+                        {% if metrics.ai_initiatives.partnerships.strategic_investments %}
+                            <div class="compact-card">
+                                <div class="compact-header">
+                                    <i class="bi bi-cash me-1"></i>Strategic Investments
+                                </div>
+                                <div class="info-grid">
+                                    {% for investment in metrics.ai_initiatives.partnerships.strategic_investments %}
+                                        <div class="metric-mini">
+                                            <div class="fw-bold small">{{ investment.company }}</div>
+                                            <div class="small">Amount: {{ investment.amount }}</div>
+                                            <div class="small">Stake: {{ investment.stake }}</div>
+                                            <div class="small">Purpose: {{ investment.purpose }}</div>
+                                            <div class="small">Expected Returns: {{ investment.expected_returns }}</div>
+                                            <div class="small">Timeline: {{ investment.timeline }}</div>
+                                            {% if investment.source_quote %}
+                                                <div class="source-quote-mini">{{ investment.source_quote }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- Infrastructure -->
+                    {% if metrics.ai_initiatives.infrastructure %}
+                        <!-- Compute Investments -->
+                        {% if metrics.ai_initiatives.infrastructure.compute_investments %}
+                            <div class="compact-card">
+                                <div class="compact-header">
+                                    <i class="bi bi-server me-1"></i>Compute Investments
+                                </div>
+                                <div class="info-grid">
+                                    {% for compute in metrics.ai_initiatives.infrastructure.compute_investments %}
+                                        <div class="metric-mini">
+                                            <div class="fw-bold small">{{ compute.type }}</div>
+                                            <div class="small">Scale: {{ compute.scale }}</div>
+                                            <div class="small">Timeline: {{ compute.timeline }}</div>
+                                            <div class="small">Investment: {{ compute.investment }}</div>
+                                            <div class="small">Efficiency Gains: {{ compute.efficiency_gains }}</div>
+                                            {% if compute.source_quote %}
+                                                <div class="source-quote-mini">{{ compute.source_quote }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Capabilities -->
+                        {% if metrics.ai_initiatives.infrastructure.capabilities %}
+                            <div class="compact-card">
+                                <div class="compact-header">
+                                    <i class="bi bi-lightning-charge me-1"></i>Capabilities
+                                </div>
+                                <div class="info-grid">
+                                    {% for capability in metrics.ai_initiatives.infrastructure.capabilities %}
+                                        <div class="metric-mini">
+                                            <div class="fw-bold small">{{ capability.name }}</div>
+                                            <div class="small">{{ capability.description }}</div>
+                                            <div class="small">Competitive Advantage: {{ capability.competitive_advantage }}</div>
+                                            <div class="small">Development Stage: {{ capability.development_stage }}</div>
+                                            {% if capability.source_quote %}
+                                                <div class="source-quote-mini">{{ capability.source_quote }}</div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                <!-- Market Analysis -->
+                {% if metrics.market_analysis %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-graph-up me-1"></i>Market Analysis
+                        </div>
+                        <div class="info-grid">
+                            <!-- Competitive Position -->
+                            {% if metrics.market_analysis.competitive_position %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">Competitive Position</div>
+                                    <div class="small">Strengths: {{ metrics.market_analysis.competitive_position.strengths | join(', ') }}</div>
+                                    <div class="small">Challenges: {{ metrics.market_analysis.competitive_position.challenges | join(', ') }}</div>
+                                    <div class="small">Market Share: {{ metrics.market_analysis.competitive_position.market_share }}</div>
+                                    <div class="small">Key Differentiators: {{ metrics.market_analysis.competitive_position.key_differentiators | join(', ') }}</div>
+                                    <div class="small">Customer Metrics:</div>
+                                    <div class="small ms-3">Total Customers: {{ metrics.market_analysis.competitive_position.customer_metrics.total_customers }}</div>
+                                    <div class="small ms-3">Growth Rate: {{ metrics.market_analysis.competitive_position.customer_metrics.growth_rate }}</div>
+                                    <div class="small ms-3">Retention Rate: {{ metrics.market_analysis.competitive_position.customer_metrics.retention_rate }}</div>
+                                </div>
+                            {% endif %}
+
+                            <!-- Industry Trends -->
+                            {% if metrics.market_analysis.industry_trends %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">Industry Trends</div>
+                                    {% for trend in metrics.market_analysis.industry_trends %}
+                                        <div class="small">Trend: {{ trend.trend }}</div>
+                                        <div class="small">Impact: {{ trend.impact }}</div>
+                                        <div class="small">Company Response: {{ trend.company_response }}</div>
+                                        <div class="small">Timeline: {{ trend.timeline }}</div>
+                                        <div class="small">Market Size: {{ trend.market_size }}</div>
+                                        <hr>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Growth Drivers -->
+                            {% if metrics.market_analysis.growth_drivers %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">Growth Drivers</div>
+                                    {% for driver in metrics.market_analysis.growth_drivers %}
+                                        <div class="small">Driver: {{ driver.driver }}</div>
+                                        <div class="small">Impact: {{ driver.impact }}</div>
+                                        <div class="small">Timeline: {{ driver.timeline }}</div>
+                                        <div class="small">Investment Required: {{ driver.investment_required }}</div>
+                                        <div class="small">Risks: {{ driver.risks | join(', ') }}</div>
+                                        <hr>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Risk Factors -->
+                {% if metrics.risk_factors %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-exclamation-triangle me-1"></i>Risk Factors
+                        </div>
+                        <div class="info-grid">
+                            <!-- Operational Risks -->
+                            {% if metrics.risk_factors.operational %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">Operational Risks</div>
+                                    {% for risk in metrics.risk_factors.operational %}
+                                        <div class="small">Risk: {{ risk.risk }}</div>
+                                        <div class="small">Potential Impact: {{ risk.potential_impact }}</div>
+                                        <div class="small">Mitigation: {{ risk.mitigation }}</div>
+                                        <hr>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Market Risks -->
+                            {% if metrics.risk_factors.market %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">Market Risks</div>
+                                    {% for risk in metrics.risk_factors.market %}
+                                        <div class="small">Risk: {{ risk.risk }}</div>
+                                        <div class="small">Potential Impact: {{ risk.potential_impact }}</div>
+                                        <div class="small">Mitigation: {{ risk.mitigation }}</div>
+                                        <hr>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <!-- Regulatory Risks -->
+                            {% if metrics.risk_factors.regulatory %}
+                                <div class="metric-mini">
+                                    <div class="fw-bold small">Regulatory Risks</div>
+                                    {% for risk in metrics.risk_factors.regulatory %}
+                                        <div class="small">Risk: {{ risk.risk }}</div>
+                                        <div class="small">Potential Impact: {{ risk.potential_impact }}</div>
+                                        <div class="small">Mitigation: {{ risk.mitigation }}</div>
+                                        <hr>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Summary Metrics -->
+                {% if metrics.summary_metrics %}
+                    <div class="compact-card">
+                        <div class="compact-header">
+                            <i class="bi bi-clock-history me-1"></i>Summary Metrics
+                        </div>
+                        <div class="compact-metrics">
+                            {{ render_metric('Total AI Revenue', metrics.summary_metrics.total_ai_revenue) }}
+                            {{ render_metric('AI Revenue Growth', metrics.summary_metrics.ai_revenue_growth) }}
+                            {{ render_metric('AI Customer Base', metrics.summary_metrics.ai_customer_base) }}
+                            {{ render_metric('Investment Commitment', metrics.summary_metrics.investment_commitment) }}
+                        </div>
+                        <div class="mt-2">
+                            <div class="fw-bold small">Key Themes:</div>
+                            <div class="d-flex flex-wrap gap-1">
+                                {% for theme in metrics.summary_metrics.key_themes | default([]) %}
+                                    <span class="badge bg-primary bg-opacity-10 text-primary">{{ theme }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <div class="fw-bold small">Major Announcements:</div>
+                            <ul class="list-unstyled small">
+                                {% for announcement in metrics.summary_metrics.major_announcements | default([]) %}
+                                    <li>• {{ announcement }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="mt-2">
+                            <div class="fw-bold small">Sentiment Analysis:</div>
+                            <div class="small">Overall Tone: {{ metrics.summary_metrics.sentiment_analysis.overall_tone }}</div>
+                            <div class="small">Confidence: {{ metrics.summary_metrics.sentiment_analysis.confidence }}</div>
+                            <div class="small">Key Concerns: {{ metrics.summary_metrics.sentiment_analysis.key_concerns | join(', ') }}</div>
+                            <div class="small">Key Opportunities: {{ metrics.summary_metrics.sentiment_analysis.key_opportunities | join(', ') }}</div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% elif view_type == 'raw' %}
+            <div class="compact-card">
+                <pre class="small m-0 transcript-content">{{ transcript_data.content | safe }}</pre>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
