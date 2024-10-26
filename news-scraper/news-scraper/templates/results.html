@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scraping Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .status-bar {
+            background: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+        }
+        .article {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .article h3 {
+            margin: 0 0 15px 0;
+            color: #1a1a1a;
+            font-size: 24px;
+            line-height: 1.3;
+        }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #666;
+            font-size: 0.9em;
+            margin: 15px 0;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .article-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .article-content p {
+            margin: 15px 0;
+        }
+        .article-link {
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            margin: 10px 0;
+            transition: all 0.2s ease;
+        }
+        .article-link:hover {
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+        }
+        .timestamp {
+            color: #999;
+            font-size: 0.85em;
+            margin-top: 15px;
+            font-style: italic;
+        }
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .status-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .status-item {
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <div class="status-header">
+            <h2>Scraping Progress</h2>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+        <div class="status-details">
+            <div class="status-item">
+                Progress: <span id="progress">0</span>%
+            </div>
+            <div class="status-item">
+                Processed: <span id="processed">0</span>/<span id="total">0</span>
+            </div>
+            <div class="status-item">
+                Success: <span id="success">0</span>
+            </div>
+            <div class="status-item">
+                Errors: <span id="errors">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="articles-container"></div>
+
+    <script>
+        const articlesContainer = document.getElementById('articles-container');
+        const progressBar = document.getElementById('progress-bar');
+        const eventSource = new EventSource('/stream');
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function updateStatus(data) {
+            const progress = Math.round(data.progress);
+            document.getElementById('progress').textContent = progress;
+            document.getElementById('processed').textContent = data.processed;
+            document.getElementById('total').textContent = data.total;
+            document.getElementById('success').textContent = data.success_count;
+            document.getElementById('errors').textContent = data.error_count;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function addArticle(article) {
+            if (!article.content || article.content === 'Failed to scrape') {
+                return; // Skip failed scrapes
+            }
+
+            const articleDiv = document.createElement('div');
+            articleDiv.className = 'article';
+            articleDiv.innerHTML = `
+                <h3>${article.title}</h3>
+                <div class="article-meta">
+                    <div class="meta-item">
+                        <strong>Symbol:</strong> ${article.symbol}
+                    </div>
+                    <div class="meta-item">
+                        <strong>Published:</strong> ${formatDate(article.published_date)}
+                    </div>
+                </div>
+                <div class="article-content">
+                    ${article.content.split('\n').map(paragraph => 
+                        paragraph.trim() ? `<p>${paragraph.trim()}</p>` : ''
+                    ).join('')}
+                </div>
+                <a href="${article.url}" class="article-link" target="_blank">Read Original Article</a>
+                <div class="timestamp">Processed at: ${article.timestamp}</div>
+            `;
+            articlesContainer.insertBefore(articleDiv, articlesContainer.firstChild);
+        }
+
+        eventSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log('Received data:', data);
+
+            if (data.status === 'complete') {
+                console.log('Scraping complete');
+                eventSource.close();
+                return;
+            }
+
+            if (data.progress !== undefined) {
+                updateStatus(data);
+            }
+            else if (data.title) {
+                addArticle(data);
+            }
+        };
+
+        eventSource.onerror = function(error) {
+            console.error('EventSource error:', error);
+        };
+    </script>
+</body>
+</html>
