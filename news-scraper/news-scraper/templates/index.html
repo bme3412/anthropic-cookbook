@@ -93,7 +93,6 @@
     <div class="container">
         <h1>Financial News Scraper</h1>
         
-        <!-- Flash Messages -->
         <div class="flash-messages">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -111,7 +110,7 @@
                     type="text" 
                     id="tickers" 
                     name="tickers" 
-                    required 
+                    required
                     placeholder="Enter tickers separated by commas (e.g., AAPL, MSFT, GOOGL)"
                 >
                 <div class="help-text">Enter multiple tickers separated by commas</div>

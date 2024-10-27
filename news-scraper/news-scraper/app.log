@@ -1,0 +1,178 @@
+2024-10-26 20:35:14,668 - ERROR - Missing required environment variables: FLASK_SECRET_KEY
+2024-10-26 20:37:01,684 - ERROR - Missing required environment variables: FLASK_SECRET_KEY
+2024-10-26 20:38:08,524 - INFO - Fetching news for tickers: META
+2024-10-26 20:38:08,813 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:38:08,825 - INFO - Processing 6 valid articles
+2024-10-26 20:38:08,829 - INFO - Scraping URL: https://www.cnbc.com/2024/10/25/cramers-week-ahead-earnings-from-alphabet-meta-apple-microsoft-and-amazon.html
+2024-10-26 20:38:13,456 - ERROR - Error in AI content enhancement: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2024-10-26 20:38:17,478 - INFO - Scraping URL: https://www.investopedia.com/meta-q3-fy-2024-earnings-preview-8734011
+2024-10-26 20:43:20,352 - INFO - Fetching news for tickers: META
+2024-10-26 20:43:20,640 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:43:20,652 - INFO - Processing 6 valid articles
+2024-10-26 20:43:20,657 - INFO - Scraping URL: https://www.cnbc.com/2024/10/25/cramers-week-ahead-earnings-from-alphabet-meta-apple-microsoft-and-amazon.html
+2024-10-26 20:43:26,742 - ERROR - Error in AI content enhancement: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2024-10-26 20:45:12,557 - INFO - Fetching news for tickers: META
+2024-10-26 20:45:12,911 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:45:12,923 - INFO - Processing 6 valid articles
+2024-10-26 20:45:12,928 - INFO - Scraping URL: https://www.cnbc.com/2024/10/25/cramers-week-ahead-earnings-from-alphabet-meta-apple-microsoft-and-amazon.html
+2024-10-26 20:45:18,260 - ERROR - Error in AI content enhancement: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2024-10-26 20:48:59,182 - INFO - Fetching news for tickers: AVGO
+2024-10-26 20:48:59,392 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:48:59,403 - INFO - Processing 4 valid articles
+2024-10-26 20:48:59,408 - INFO - Scraping URL: https://www.zacks.com/stock/news/2357586/broadcom-inc-avgo-is-attracting-investor-attention-here-is-what-you-should-know?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|most_searched_stocks-2357586
+2024-10-26 20:49:04,455 - ERROR - Error in AI content enhancement: Error code: 400 - {'error': {'message': "Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}
+2024-10-26 20:50:12,586 - INFO - Fetching news for tickers: INTC
+2024-10-26 20:50:12,842 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:50:12,851 - INFO - Processing 8 valid articles
+2024-10-26 20:50:12,856 - INFO - Scraping URL: https://www.marketwatch.com/story/beyond-ai-amd-and-intel-earnings-will-hit-on-another-important-trend-1c823f80
+2024-10-26 20:50:21,560 - INFO - Scraping URL: https://www.reuters.com/technology/intel-invest-more-than-28-bln-build-two-chip-factories-ohio-2024-10-25/
+2024-10-26 20:50:30,764 - INFO - Successfully enhanced content for INTC: Intel to invest more than $28 bln to build two chip factories in Ohio
+2024-10-26 20:50:33,423 - INFO - Scraping URL: https://www.zacks.com/stock/news/2357616/intc-stock-before-q3-earnings-release-to-buy-or-not-to-buy?cid=CS-STOCKNEWSAPI-FT-analyst_blog|most_popular_stocks-2357616
+2024-10-26 20:50:45,088 - INFO - Successfully enhanced content for INTC: INTC Stock Before Q3 Earnings Release: To Buy or Not to Buy?
+2024-10-26 20:50:49,289 - INFO - Scraping URL: https://www.globenewswire.com/news-release/2024/10/24/2968886/0/en/Iterate-ai-Partners-with-Intel-Bringing-its-AI-Manager-to-Intel-AI-PCs.html
+2024-10-26 20:50:56,407 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241024218697/en/Cooler-Master-Announces-Products-Compatible-with-Intel%C2%AE-Core%E2%84%A2-Ultra-200S-Series-Processors-for-Next-Gen-Cooling-Solutions/
+2024-10-26 20:50:59,990 - ERROR - Scraping error for https://www.businesswire.com/news/home/20241024218697/en/Cooler-Master-Announces-Products-Compatible-with-Intel%C2%AE-Core%E2%84%A2-Ultra-200S-Series-Processors-for-Next-Gen-Cooling-Solutions/: 403 Client Error: Forbidden for url: https://www.businesswire.com/news/home/20241024218697/en/Cooler-Master-Announces-Products-Compatible-with-Intel%C2%AE-Core%E2%84%A2-Ultra-200S-Series-Processors-for-Next-Gen-Cooling-Solutions/
+2024-10-26 20:51:03,773 - INFO - Scraping URL: https://www.investopedia.com/intel-wins-against-eu-as-top-court-axes-usd1-15b-antitrust-fine-8733355
+2024-10-26 20:51:17,957 - INFO - Successfully enhanced content for INTC: Intel Wins Against EU as Top Court Axes $1.15B Antitrust Fine
+2024-10-26 20:51:20,258 - INFO - Scraping URL: https://techxplore.com/news/2024-10-intel-eyes-bay-area-job.html
+2024-10-26 20:51:24,543 - ERROR - Scraping error for https://techxplore.com/news/2024-10-intel-eyes-bay-area-job.html: 422 Client Error: Unprocessable Content for url: https://techxplore.com/news/2024-10-intel-eyes-bay-area-job.html
+2024-10-26 20:51:28,970 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241024096444/en/Kingston-Technology-to-Release-CUDIMM-Modules-for-Intel-800-Series-Chipset/
+2024-10-26 20:51:32,767 - ERROR - Scraping error for https://www.businesswire.com/news/home/20241024096444/en/Kingston-Technology-to-Release-CUDIMM-Modules-for-Intel-800-Series-Chipset/: 403 Client Error: Forbidden for url: https://www.businesswire.com/news/home/20241024096444/en/Kingston-Technology-to-Release-CUDIMM-Modules-for-Intel-800-Series-Chipset/
+2024-10-26 20:56:45,802 - INFO - Starting application on port 5000
+2024-10-26 20:57:01,420 - INFO - Fetching news for tickers: NVDA
+2024-10-26 20:57:01,652 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:57:01,660 - INFO - Processing 4 valid articles
+2024-10-26 20:57:01,663 - INFO - Scraping URL: https://247wallst.com/investing/2024/10/26/why-nvidia-is-worth-more-than-apple/
+2024-10-26 20:57:05,976 - ERROR - OpenAI API error: Error code: 400 - {'error': {'message': "Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}
+2024-10-26 20:57:05,976 - ERROR - Error in AI content enhancement: Error code: 400 - {'error': {'message': "Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}
+2024-10-26 20:57:09,435 - INFO - Scraping URL: https://www.investopedia.com/retail-investors-nvidia-and-other-single-stocks-what-that-means-8734308
+2024-10-26 20:57:11,981 - ERROR - OpenAI API error: Error code: 400 - {'error': {'message': "Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}
+2024-10-26 20:57:11,981 - ERROR - Error in AI content enhancement: Error code: 400 - {'error': {'message': "Invalid parameter: 'response_format' of type 'json_object' is not supported with this model.", 'type': 'invalid_request_error', 'param': 'response_format', 'code': None}}
+2024-10-26 20:58:19,693 - INFO - Starting application on port 5000
+2024-10-26 20:58:30,665 - INFO - Fetching news for tickers: NVDA
+2024-10-26 20:58:30,901 - INFO - Successfully fetched 10 news articles
+2024-10-26 20:58:30,914 - INFO - Processing 4 valid articles
+2024-10-26 20:58:30,918 - INFO - Scraping URL: https://247wallst.com/investing/2024/10/26/why-nvidia-is-worth-more-than-apple/
+2024-10-26 20:58:51,808 - ERROR - Failed to parse OpenAI response as JSON: Invalid control character at: line 15 column 306 (char 2024)
+2024-10-26 20:58:56,065 - INFO - Scraping URL: https://www.investopedia.com/retail-investors-nvidia-and-other-single-stocks-what-that-means-8734308
+2024-10-26 20:59:15,551 - INFO - Successfully enhanced content for NVDA: Retail Investors Are Buying Up Nvidia and Other Single Stocks. Here's What That Means.
+2024-10-26 20:59:17,592 - INFO - Scraping URL: https://www.marketwatch.com/story/this-chart-shows-how-nvidia-soared-back-toward-the-top-of-the-tech-heap-73635f7a
+2024-10-26 20:59:32,854 - ERROR - Failed to parse OpenAI response as JSON: Invalid control character at: line 5 column 58 (char 236)
+2024-10-26 20:59:35,059 - INFO - Scraping URL: https://www.marketwatch.com/story/how-to-increase-or-cut-your-exposure-to-nvidia-and-other-hot-big-tech-stocks-f4d42212
+2024-10-26 20:59:46,269 - INFO - Successfully enhanced content for NVDA: How to increase or cut your exposure to Nvidia and other hot Big Tech stocks
+2024-10-26 21:01:48,741 - INFO - Starting application on port 5000
+2024-10-26 21:01:55,941 - INFO - Fetching news for tickers: MSFT
+2024-10-26 21:01:56,168 - INFO - Successfully fetched 11 news articles
+2024-10-26 21:01:56,173 - INFO - Processing 8 valid articles
+2024-10-26 21:01:56,176 - INFO - Scraping URL: https://www.cnbc.com/2024/10/25/cramers-week-ahead-earnings-from-alphabet-meta-apple-microsoft-and-amazon.html
+2024-10-26 21:02:12,700 - INFO - Successfully enhanced content for MSFT: Cramer's week ahead: Earnings from Alphabet, Meta, Apple, Microsoft and Amazon
+2024-10-26 21:02:16,616 - INFO - Scraping URL: https://nypost.com/2024/10/25/business/microsoft-ceo-satya-nadella-gets-30m-raise-amid-layoffs/
+2024-10-26 21:02:32,772 - INFO - Successfully enhanced content for MSFT: Microsoft CEO Satya Nadella gets $30M raise — while company fired nearly 2,500 workers
+2024-10-26 21:02:37,330 - INFO - Scraping URL: https://www.prnewswire.com/news-releases/cureduchenne-partners-with-blizzard-entertainment-and-world-of-warcraft-for-limited-time-charity-pet-program-302287596.html
+2024-10-26 21:02:55,915 - INFO - Successfully enhanced content for MSFT: CureDuchenne Partners with Blizzard Entertainment and World of Warcraft for Limited-Time Charity Pet Program
+2024-10-26 21:02:58,977 - INFO - Scraping URL: https://www.zacks.com/stock/news/2358003/microsoft-stock-before-q1-earnings-buy-now-or-wait-for-results?cid=CS-STOCKNEWSAPI-FT-analyst_blog|most_popular_stocks-2358003
+2024-10-26 21:03:11,069 - INFO - Successfully enhanced content for MSFT: Microsoft Stock Before Q1 Earnings: Buy Now or Wait for Results?
+2024-10-26 21:03:15,896 - INFO - Scraping URL: https://finbold.com/perplexity-ai-predicts-microsoft-stock-price-amid-bitcoin-investing-proposal/
+2024-10-26 21:03:32,370 - INFO - Successfully enhanced content for MSFT: Perplexity AI predicts Microsoft stock price amid Bitcoin investing proposal
+2024-10-26 21:03:36,349 - INFO - Scraping URL: https://finbold.com/perplexity-ai-predicts-microsoft-stock-price-amid-bitcoin-investing-proposal/
+2024-10-26 21:03:55,514 - INFO - Successfully enhanced content for MSFT: Perplexity AI predicts Microsoft stock price amid Bitcoin investing proposal
+2024-10-26 21:04:00,368 - INFO - Scraping URL: https://www.zacks.com/stock/news/2357630/countdown-to-microsoft-msft-q1-earnings-wall-street-forecasts-for-key-metrics?cid=CS-STOCKNEWSAPI-FT-fundamental_analysis|nfm_preview-2357630
+2024-10-26 21:04:10,976 - INFO - Successfully enhanced content for MSFT: Countdown to Microsoft (MSFT) Q1 Earnings: Wall Street Forecasts for Key Metrics
+2024-10-26 21:04:13,480 - INFO - Scraping URL: https://www.zacks.com/stock/news/2357592/microsoft-corporation-msft-is-attracting-investor-attention-here-is-what-you-should-know?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|most_searched_stocks-2357592
+2024-10-26 21:04:24,082 - INFO - Successfully enhanced content for MSFT: Microsoft Corporation (MSFT) is Attracting Investor Attention: Here is What You Should Know
+2024-10-26 21:11:36,377 - INFO - Starting application on port 5000
+2024-10-26 21:11:46,804 - INFO - Fetching news for tickers: TTD
+2024-10-26 21:11:47,019 - INFO - Successfully fetched 10 news articles
+2024-10-26 21:11:47,032 - INFO - Processing 6 valid articles
+2024-10-26 21:11:47,037 - INFO - Scraping URL: https://www.zacks.com/stock/news/2358047/ttd-rises-79-in-a-year-is-it-too-late-to-jump-into-the-stock?cid=CS-STOCKNEWSAPI-FT-analyst_blog|most_popular_stocks-2358047
+2024-10-26 21:11:53,289 - INFO - Successfully enhanced content for TTD: TTD Rises 79% in a Year: Is it Too Late to Jump Into the Stock?
+2024-10-26 21:11:57,670 - INFO - Scraping URL: https://www.zacks.com/stock/news/2356246/the-trade-desk-ttd-suffers-a-larger-drop-than-the-general-market-key-insights?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|yseop_template_6-2356246
+2024-10-26 21:12:03,147 - INFO - Successfully enhanced content for TTD: The Trade Desk (TTD) Suffers a Larger Drop Than the General Market: Key Insights
+2024-10-26 21:12:05,879 - INFO - Scraping URL: https://www.zacks.com/stock/news/2355597/the-trade-desk-ttd-is-a-trending-stock-facts-to-know-before-betting-on-it?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|most_searched_stocks-2355597
+2024-10-26 21:12:12,819 - INFO - Successfully enhanced content for TTD: The Trade Desk (TTD) Is a Trending Stock: Facts to Know Before Betting on It
+2024-10-26 21:12:17,702 - INFO - Scraping URL: https://www.zacks.com/stock/news/2352687/the-trade-desk-ttd-sees-a-more-significant-dip-than-broader-market-some-facts-to-know?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|yseop_template_6-2352687
+2024-10-26 21:12:24,529 - INFO - Successfully enhanced content for TTD: The Trade Desk (TTD) Sees a More Significant Dip Than Broader Market: Some Facts to Know
+2024-10-26 21:12:29,221 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241017351392/en/The-Trade-Desk-Announces-Date-of-Third-Quarter-2024-Financial-Results-and-Conference-Call/
+2024-10-26 21:12:39,176 - INFO - Successfully enhanced content for TTD: The Trade Desk Announces Date of Third Quarter 2024 Financial Results and Conference Call
+2024-10-26 21:12:41,906 - INFO - Scraping URL: https://www.zacks.com/stock/news/2351335/is-the-trade-desk-ttd-a-buy-as-wall-street-analysts-look-optimistic?cid=CS-STOCKNEWSAPI-FT-fundamental_analysis|average_broker_rating-2351335
+2024-10-26 21:12:49,643 - INFO - Successfully enhanced content for TTD: Is The Trade Desk (TTD) a Buy as Wall Street Analysts Look Optimistic?
+2024-10-26 21:16:54,111 - INFO - Starting application on port 5000
+2024-10-26 21:17:03,056 - INFO - Fetching news for tickers: BABA
+2024-10-26 21:17:03,370 - INFO - Successfully fetched 10 news articles
+2024-10-26 21:17:03,376 - INFO - Processing 6 valid articles
+2024-10-26 21:17:03,379 - INFO - Scraping URL: https://www.reuters.com/business/retail-consumer/alibaba-pay-4335-million-settle-shareholder-lawsuit-over-monopoly-claims-2024-10-26/
+2024-10-26 21:17:11,089 - INFO - Successfully enhanced content for BABA: Alibaba to pay $433.5 million to settle shareholder lawsuit over monopoly claims
+2024-10-26 21:17:14,115 - INFO - Scraping URL: https://www.zacks.com/stock/news/2357719/should-value-investors-buy-alibaba-baba-stock?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|yseop_template_2-2357719
+2024-10-26 21:17:22,437 - INFO - Successfully enhanced content for BABA: Should Value Investors Buy Alibaba (BABA) Stock?
+2024-10-26 21:17:24,713 - INFO - Scraping URL: https://www.zacks.com/stock/news/2357103/alibaba-stock-surges-26-4-ytd-3-other-factors-that-make-it-a-buy?cid=CS-STOCKNEWSAPI-FT-analyst_blog|most_popular_stocks-2357103
+2024-10-26 21:17:33,292 - INFO - Successfully enhanced content for BABA: Alibaba Stock Surges 26.4% YTD: 3 Other Factors That Make it a Buy
+2024-10-26 21:17:36,756 - INFO - Scraping URL: https://www.zacks.com/stock/news/2355325/here-s-why-alibaba-baba-fell-more-than-broader-market?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|yseop_template_6-2355325
+2024-10-26 21:17:43,634 - INFO - Successfully enhanced content for BABA: Here's Why Alibaba (BABA) Fell More Than Broader Market
+2024-10-26 21:17:45,680 - INFO - Scraping URL: https://www.zacks.com/stock/news/2354573/why-investors-need-to-take-advantage-of-these-2-retail-and-wholesale-stocks-now?cid=CS-STOCKNEWSAPI-FT-tale_of_the_tape|zacks_education_earnings_esp-2354573
+2024-10-26 21:17:52,034 - INFO - Successfully enhanced content for BABA: Why Investors Need to Take Advantage of These 2 Retail and Wholesale Stocks Now
+2024-10-26 21:17:55,320 - INFO - Scraping URL: https://www.zacks.com/stock/news/2353890/is-it-worth-investing-in-alibaba-baba-based-on-wall-street-s-bullish-views?cid=CS-STOCKNEWSAPI-FT-fundamental_analysis|average_broker_rating-2353890
+2024-10-26 21:18:02,064 - INFO - Successfully enhanced content for BABA: Is It Worth Investing in Alibaba (BABA) Based on Wall Street's Bullish Views?
+2024-10-26 21:19:40,341 - INFO - Starting application on port 5000
+2024-10-26 21:19:49,958 - INFO - Fetching news for tickers: NKE
+2024-10-26 21:19:50,179 - INFO - Successfully fetched 10 news articles
+2024-10-26 21:19:50,185 - INFO - Processing 1 valid articles
+2024-10-26 21:19:50,187 - INFO - Scraping URL: https://www.globenewswire.com/news-release/2024/10/24/2968302/0/en/Howard-Community-College-Announces-Historic-Apparel-Partnership-with-Nike-BSN-Sports.html
+2024-10-26 21:19:58,308 - INFO - Successfully enhanced content for NKE: Howard Community College Announces Historic Apparel Partnership with Nike, BSN Sports
+2024-10-26 21:21:03,771 - INFO - Starting application on port 5000
+2024-10-26 21:21:12,540 - INFO - Fetching news for tickers: AAPL
+2024-10-26 21:21:12,830 - INFO - Successfully fetched 10 news articles
+2024-10-26 21:21:12,835 - INFO - Processing 1 valid articles
+2024-10-26 21:21:12,838 - INFO - Scraping URL: https://www.reuters.com/legal/masimo-smartwatches-infringe-apple-patents-us-jury-says-2024-10-25/
+2024-10-26 21:21:22,687 - INFO - Successfully enhanced content for AAPL: Masimo smartwatches infringe Apple design patents, US jury says
+2024-10-26 21:23:34,066 - INFO - Starting application on port 5000
+2024-10-26 21:23:39,352 - INFO - Fetching news page 0 for tickers: NKE
+2024-10-26 21:23:40,704 - INFO - Fetching news page 1 for tickers: NKE
+2024-10-26 21:23:41,920 - INFO - Found 10 valid articles after checking 2 pages
+2024-10-26 21:23:41,921 - INFO - Processing 10 valid articles
+2024-10-26 21:23:41,922 - INFO - Scraping URL: https://www.globenewswire.com/news-release/2024/10/24/2968302/0/en/Howard-Community-College-Announces-Historic-Apparel-Partnership-with-Nike-BSN-Sports.html
+2024-10-26 21:23:49,118 - INFO - Successfully enhanced content for NKE: Howard Community College Announces Historic Apparel Partnership with Nike, BSN Sports
+2024-10-26 21:23:54,085 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241021639393/en/NIKE-Inc.-Signs-Historic-Partnership-Extension-With-NBA-WNBA-and-NBA-G-League-Through-2037/
+2024-10-26 21:24:03,137 - INFO - Successfully enhanced content for NKE: NIKE, Inc. Signs Historic Partnership Extension With NBA, WNBA and NBA G League Through 2037
+2024-10-26 21:24:07,795 - INFO - Scraping URL: https://www.marketwatch.com/story/nike-elevates-another-company-veteran-as-new-ceo-prepares-to-take-reins-68d84ede
+2024-10-26 21:24:13,964 - INFO - Successfully enhanced content for NKE: Nike elevates another company veteran, as new CEO prepares to take reins
+2024-10-26 21:24:17,724 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241010270874/en/Nike-Names-Tom-Peddie-as-VP-GM-of-North-America-Geography/
+2024-10-26 21:24:22,037 - ERROR - Scraping error for https://www.businesswire.com/news/home/20241010270874/en/Nike-Names-Tom-Peddie-as-VP-GM-of-North-America-Geography/: 403 Client Error: Forbidden for url: https://www.businesswire.com/news/home/20241010270874/en/Nike-Names-Tom-Peddie-as-VP-GM-of-North-America-Geography/
+2024-10-26 21:24:24,164 - INFO - Successfully enhanced content for NKE: Nike Names Tom Peddie as VP, GM of North America Geography
+2024-10-26 21:24:27,218 - INFO - Scraping URL: https://www.benzinga.com/analyst-ratings/analyst-color/24/10/41277821/nike-upgraded-analyst-optimistic-despite-lengthy-process-and-competitive-challenges
+2024-10-26 21:24:36,676 - INFO - Successfully enhanced content for NKE: Nike Upgraded: Analyst Optimistic Despite Lengthy Process And Competitive Challenges
+2024-10-26 21:24:40,397 - INFO - Scraping URL: https://www.marketwatch.com/story/buy-nikes-stock-now-as-new-management-can-excite-investors-again-analyst-says-a9bd16d0
+2024-10-26 21:24:47,779 - INFO - Successfully enhanced content for NKE: Buy Nike's stock now, as new management can excite investors again, analyst says
+2024-10-26 21:24:51,838 - INFO - Scraping URL: https://www.benzinga.com/news/24/10/41270889/this-nike-analyst-turns-bullish-here-are-top-5-upgrades-for-thursday
+2024-10-26 21:25:06,519 - INFO - Successfully enhanced content for NKE: This Nike Analyst Turns Bullish; Here Are Top 5 Upgrades For Thursday
+2024-10-26 21:25:10,349 - INFO - Scraping URL: https://www.benzinga.com/analyst-ratings/analyst-color/24/10/41254904/nikes-forward-march-hits-speed-bumps-analyst-identifies-red-flags-in-sec-filing
+2024-10-26 21:25:19,323 - INFO - Successfully enhanced content for NKE: Nike's Forward March Hits Speed Bumps: Analyst Identifies Red Flags In SEC Filing
+2024-10-26 21:25:24,205 - INFO - Scraping URL: https://www.reuters.com/business/retail-consumer/nike-struggles-adidas-must-surf-samba-wave-with-caution-2024-10-08/
+2024-10-26 21:25:32,341 - INFO - Successfully enhanced content for NKE: As Nike struggles, Adidas must surf Samba wave with caution
+2024-10-26 21:25:34,946 - INFO - Scraping URL: https://www.benzinga.com/news/24/10/41198592/coinbase-nike-and-moderna-are-among-top-11-large-cap-losers-last-week-sept-30-oct-4-are-the-others-i
+2024-10-26 21:25:42,563 - INFO - Successfully enhanced content for NKE: Coinbase, Nike And Moderna Are Among Top 11 Large Cap Losers Last Week (Sept 30-Oct 4): Are The Others In Your Portfolio?
+2024-10-26 21:26:34,208 - INFO - Starting application on port 5000
+2024-10-26 21:26:40,431 - INFO - Fetching news page 0 for tickers: NVDA
+2024-10-26 21:26:41,744 - INFO - Found 10 valid articles after checking 1 pages
+2024-10-26 21:26:41,746 - INFO - Processing 10 valid articles
+2024-10-26 21:26:41,746 - INFO - Scraping URL: https://www.marketwatch.com/story/this-chart-shows-how-nvidia-soared-back-toward-the-top-of-the-tech-heap-73635f7a
+2024-10-26 21:26:46,815 - INFO - Successfully enhanced content for NVDA: This chart shows how Nvidia soared back toward the top of the tech heap
+2024-10-26 21:26:49,408 - INFO - Scraping URL: https://www.marketwatch.com/story/how-to-increase-or-cut-your-exposure-to-nvidia-and-other-hot-big-tech-stocks-f4d42212
+2024-10-26 21:26:54,367 - INFO - Successfully enhanced content for NVDA: How to increase or cut your exposure to Nvidia and other hot Big Tech stocks
+2024-10-26 21:26:58,266 - INFO - Scraping URL: https://www.reuters.com/technology/nvidia-overtakes-apple-worlds-most-valuable-company-2024-10-25/
+2024-10-26 21:27:07,352 - INFO - Successfully enhanced content for NVDA: Nvidia overtakes Apple as world's most valuable company
+2024-10-26 21:27:11,185 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241025773919/en/RegASK-Joins-NVIDIA-Inception-Program-to-Advance-AI-Driven-Regulatory-Intelligence/
+2024-10-26 21:27:21,379 - INFO - Successfully enhanced content for NVDA: RegASK Joins NVIDIA Inception Program to Advance AI-Driven Regulatory Intelligence
+2024-10-26 21:27:24,805 - INFO - Scraping URL: https://www.marketwatch.com/story/nvidia-has-offset-all-128-of-the-s-p-500-companies-that-have-declined-this-year-twice-over-b589fc8f
+2024-10-26 21:27:33,190 - INFO - Successfully enhanced content for NVDA: Nvidia has offset all 128 of the S&P 500 companies that have declined this year, twice over
+2024-10-26 21:27:36,545 - INFO - Scraping URL: https://www.reuters.com/technology/nvidia-ceo-jensen-huang-gets-rock-star-treatment-indias-tech-enthusiasts-2024-10-24/
+2024-10-26 21:27:44,635 - INFO - Successfully enhanced content for NVDA: Nvidia CEO Jensen Huang gets rock star treatment from India's tech enthusiasts
+2024-10-26 21:27:48,812 - INFO - Scraping URL: https://www.prnewswire.com/news-releases/tech-mahindra-announces-ai-center-of-excellence-powered-by-nvidia-ai-enterprise-and-omniverse-platforms-302285837.html
+2024-10-26 21:27:59,990 - INFO - Successfully enhanced content for NVDA: Tech Mahindra Announces AI Center of Excellence, Powered by NVIDIA AI Enterprise and Omniverse Platforms
+2024-10-26 21:28:02,448 - INFO - Scraping URL: https://www.reuters.com/technology/artificial-intelligence/nvidia-rolls-out-hindi-language-ai-model-india-ceo-huang-visits-2024-10-24/
+2024-10-26 21:28:16,415 - INFO - Successfully enhanced content for NVDA: Nvidia rolls out Hindi-language AI model in India as CEO Huang visits
+2024-10-26 21:28:19,850 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241023618934/en/Zoho-Corporation-to-Leverage-NVIDIA-NeMo-to-Build-LLMs/
+2024-10-26 21:28:23,601 - ERROR - Scraping error for https://www.businesswire.com/news/home/20241023618934/en/Zoho-Corporation-to-Leverage-NVIDIA-NeMo-to-Build-LLMs/: 403 Client Error: Forbidden for url: https://www.businesswire.com/news/home/20241023618934/en/Zoho-Corporation-to-Leverage-NVIDIA-NeMo-to-Build-LLMs/
+2024-10-26 21:28:25,893 - INFO - Successfully enhanced content for NVDA: Zoho Corporation to Leverage NVIDIA NeMo to Build LLMs
+2024-10-26 21:28:29,333 - INFO - Scraping URL: https://www.businesswire.com/news/home/20241023073581/en/F5-to-Supercharge-AI-Application-Delivery-for-Service-Providers-and-Enterprises-with-NVIDIA-BlueField-3-DPUs/
+2024-10-26 21:28:32,475 - ERROR - Scraping error for https://www.businesswire.com/news/home/20241023073581/en/F5-to-Supercharge-AI-Application-Delivery-for-Service-Providers-and-Enterprises-with-NVIDIA-BlueField-3-DPUs/: 403 Client Error: Forbidden for url: https://www.businesswire.com/news/home/20241023073581/en/F5-to-Supercharge-AI-Application-Delivery-for-Service-Providers-and-Enterprises-with-NVIDIA-BlueField-3-DPUs/
+2024-10-26 21:28:34,535 - INFO - Successfully enhanced content for NVDA: F5 to Supercharge AI Application Delivery for Service Providers and Enterprises with NVIDIA BlueField-3 DPUs
