@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earnings Call Analyzer | Advanced Analysis</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-pb2hJk9N6G+1B9F5v7eE5nN4fnnK+hXGzW+XBoMBfKqPp1iQwURhxrgwsvXWnFqxEBf+mC0/Z5dq3H5qER0dqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+      /* Custom Styles */
+      /* Scrollbar styling */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #d1d5db; /* Tailwind gray-300 */
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background-color: #f3f4f6; /* Tailwind gray-100 */
+      }
+
+      /* Tooltip styles */
+      .tooltip {
+        visibility: hidden;
+        position: absolute;
+        z-index: 10;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #fff;
+        background-color: #374151; /* Tailwind gray-700 */
+        border-radius: 0.375rem;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .has-tooltip:hover .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      /* Data visualization colors */
+      .positive-value {
+        color: #10b981; /* Tailwind green-500 */
+      }
+      .negative-value {
+        color: #ef4444; /* Tailwind red-500 */
+      }
+      .neutral-value {
+        color: #6b7280; /* Tailwind gray-500 */
+      }
+
+      /* Modal Enhancements */
+      .modal-transition {
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      }
+      .modal-enter {
+        transform: translate-y(-10%);
+        opacity: 0;
+      }
+      .modal-enter-active {
+        transform: translate-y(0);
+        opacity: 1;
+      }
+      .modal-exit {
+        transform: translate-y(0);
+        opacity: 1;
+      }
+      .modal-exit-active {
+        transform: translate-y(-10%);
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex items-center">
+            <i class="fas fa-chart-line text-indigo-600 text-2xl mr-3"></i>
+            <span class="font-semibold text-xl text-gray-800">Advanced Earnings Analyzer</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <span id="status" class="text-sm text-gray-500 flex items-center">
+              <i class="fas fa-circle text-green-500 mr-2"></i>
+              Ready
+            </span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Input Form -->
+      <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">Configure Analysis</h2>
+          <p class="text-gray-600">
+            Set up your analysis parameters and credentials below.
+          </p>
+        </div>
+
+        <form id="analyzeForm" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- API Key Input -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <i class="fas fa-key text-indigo-600 mr-2"></i>
+                Anthropic API Key
+              </label>
+              <div class="relative">
+                <input
+                  type="password"
+                  name="api_key"
+                  class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                  required
+                />
+                <button
+                  type="button"
+                  onclick="togglePassword()"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                  aria-label="Toggle password visibility"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Transcripts Directory Input -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                <i class="fas fa-folder text-indigo-600 mr-2"></i>
+                Transcripts Directory
+              </label>
+              <input
+                type="text"
+                name="base_dir"
+                value="tech_transcripts_historical"
+                class="block w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-end">
+            <button
+              type="submit"
+              id="submitBtn"
+              class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <i class="fas fa-play mr-2"></i>
+              Start Analysis
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Progress Log and Results -->
+      <div id="progressSection" class="space-y-4 hidden">
+        <!-- Progress Log -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Analysis Progress</h3>
+          <div
+            id="progressLog"
+            class="space-y-2 font-mono text-sm max-h-40 overflow-y-auto custom-scrollbar"
+          ></div>
+        </div>
+
+        <!-- Results Table and Search -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <!-- Search Input -->
+          <div class="mb-4">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search results..."
+              class="px-4 py-2 border rounded-lg w-full focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+            />
+          </div>
+
+          <!-- Results Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                    data-column="company"
+                    data-sortable="true"
+                  >
+                    Company
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                    data-column="quarter"
+                    data-sortable="true"
+                  >
+                    Quarter
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                    data-column="revenue"
+                    data-sortable="true"
+                  >
+                    Revenue
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                    data-column="growth"
+                    data-sortable="true"
+                  >
+                    Growth
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                    data-column="eps"
+                    data-sortable="true"
+                  >
+                    EPS (Non-GAAP)
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer"
+                    data-column="margin"
+                    data-sortable="true"
+                  >
+                    Margin
+                  </th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                    data-sortable="false"
+                  >
+                    Details
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="resultsBody" class="bg-white divide-y divide-gray-200"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Export Buttons -->
+        <div class="flex justify-end space-x-4">
+          <button
+            onclick="downloadCSV()"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <i class="fas fa-file-csv mr-2"></i>
+            Export CSV
+          </button>
+          <button
+            onclick="downloadJSON()"
+            class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            <i class="fas fa-file-code mr-2"></i>
+            Export JSON
+          </button>
+        </div>
+      </div>
+
+      <!-- Details Modal -->
+      <div id="detailsModal" class="fixed inset-0 bg-gray-500 bg-opacity-75 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
+          <!-- Modal Header -->
+          <div class="sticky top-0 bg-white px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-semibold text-gray-800" id="modalTitle"></h3>
+              <p class="text-sm text-gray-500" id="modalSubtitle"></p>
+            </div>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          
+          <!-- Modal Content -->
+          <div class="px-6 py-4">
+            <!-- Tabs -->
+            <div class="border-b border-gray-200 mb-6">
+              <nav class="-mb-px flex space-x-8" id="modalTabs">
+                <button class="tab-btn active flex items-center space-x-2" data-tab="overview">
+                  <i class="fas fa-chart-pie"></i>
+                  <span>Overview</span>
+                </button>
+                <button class="tab-btn flex items-center space-x-2" data-tab="segments">
+                  <i class="fas fa-puzzle-piece"></i>
+                  <span>Segments</span>
+                </button>
+                <button class="tab-btn flex items-center space-x-2" data-tab="guidance">
+                  <i class="fas fa-binoculars"></i>
+                  <span>Guidance</span>
+                </button>
+                <button class="tab-btn flex items-center space-x-2" data-tab="strategic">
+                  <i class="fas fa-bullseye"></i>
+                  <span>Strategic</span>
+                </button>
+                <button class="tab-btn flex items-center space-x-2" data-tab="risks">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <span>Risks</span>
+                </button>
+              </nav>
+            </div>
+            
+            <!-- Tab Content -->
+            <div id="modalContent" class="space-y-6">
+              <div id="overview" class="tab-content">
+                <!-- Overview Content Populated by JavaScript -->
+              </div>
+              <div id="segments" class="tab-content hidden">
+                <!-- Segments Content Populated by JavaScript -->
+              </div>
+              <div id="guidance" class="tab-content hidden">
+                <!-- Guidance Content Populated by JavaScript -->
+              </div>
+              <div id="strategic" class="tab-content hidden">
+                <!-- Strategic Content Populated by JavaScript -->
+              </div>
+              <div id="risks" class="tab-content hidden">
+                <!-- Risks Content Populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      let analysisResults = [];
+      
+      // Toggle Password Visibility
+      function togglePassword() {
+        const input = document.querySelector('input[name="api_key"]');
+        const button = input.nextElementSibling;
+        const icon = button.querySelector('i');
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+
+      // Format number with appropriate suffix (B/M)
+      function formatNumber(value, type = 'currency') {
+        if (value === null || value === undefined) return 'N/A';
+        
+        if (type === 'currency') {
+          if (Math.abs(value) >= 1) {
+            return `$${value.toFixed(2)}B`;
+          } else {
+            return `$${(value * 1000).toFixed(0)}M`;
+          }
+        } else if (type === 'percentage') {
+          return `${value.toFixed(1)}%`;
+        }
+        return value.toString();
+      }
+
+      // Add Log Entry
+      function addLogEntry(message, type = "info") {
+        const log = document.getElementById("progressLog");
+        const entry = document.createElement("div");
+        entry.className = `p-2 rounded ${
+          type === "error" ? "bg-red-50 text-red-700" : "bg-gray-50 text-gray-700"
+        }`;
+        entry.textContent = message;
+        log.appendChild(entry);
+        log.scrollTop = log.scrollHeight;
+      }
+
+      // Update Results Table
+      function updateResultsTable(result) {
+        const tbody = document.getElementById("resultsBody");
+        const row = document.createElement("tr");
+        
+        const safeData = {
+          quarter_info: result.quarter_info,
+          financial_metrics: result.financial_metrics,
+          segment_performance: result.segment_performance,
+          geographic_performance: result.geographic_performance,
+          guidance: result.guidance,
+          strategic_initiatives: result.strategic_initiatives,
+          market_position: result.market_position,
+          operational_highlights: result.operational_highlights,
+          risk_factors: result.risk_factors,
+          management_changes: result.management_changes,
+          key_quotes: result.key_quotes
+        };
+
+        const dataAttr = encodeURIComponent(JSON.stringify(safeData));
+
+        row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">${result.quarter_info.symbol || 'N/A'}</div>
+            <div class="text-xs text-gray-500">${result.quarter_info.fiscal_year || ''}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            ${result.quarter_info.fiscal_quarter || 'N/A'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            ${formatNumber(result.financial_metrics.revenue.value)}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+              (result.financial_metrics.revenue_growth.value || 0) >= 0
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }">
+              ${formatNumber(result.financial_metrics.revenue_growth.value, 'percentage')}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            ${formatNumber(result.financial_metrics.eps.non_gaap.value)}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            ${formatNumber(result.financial_metrics.operating_margin.value, 'percentage')}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <button 
+              class="text-indigo-600 hover:text-indigo-900 focus:outline-none view-details-btn"
+              data-details="${dataAttr}"
+            >
+              <i class="fas fa-eye mr-1"></i>View
+            </button>
+          </td>
+        `;
+
+        tbody.appendChild(row);
+      }
+
+      // Show Details in Modal
+      function showDetails(data) {
+        const modal = document.getElementById('detailsModal');
+        const title = document.getElementById('modalTitle');
+        const subtitle = document.getElementById('modalSubtitle');
+        
+        title.textContent = `${data.quarter_info.symbol || 'N/A'} - ${data.quarter_info.fiscal_quarter} ${data.quarter_info.fiscal_year}`;
+        subtitle.textContent = `${data.quarter_info.fiscal_quarter} ${data.quarter_info.fiscal_year}`;
+
+        // Populate Overview Tab
+        document.getElementById('overview').innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Financial Metrics -->
+            <div class="bg-gray-50 rounded-lg p-4 shadow-inner">
+              <h4 class="font-semibold text-gray-800 mb-3">Financial Performance</h4>
+              <div class="space-y-3">
+                <div>
+                  <div class="text-sm text-gray-600">Revenue</div>
+                  <div class="font-semibold">${formatNumber(data.financial_metrics.revenue.value)}</div>
+                  <div class="text-xs text-gray-500 mt-1">${data.financial_metrics.revenue.quote}</div>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">EPS (GAAP / Non-GAAP)</div>
+                  <div class="font-semibold">
+                    ${formatNumber(data.financial_metrics.eps.gaap.value)} / 
+                    ${formatNumber(data.financial_metrics.eps.non_gaap.value)}
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">${data.financial_metrics.eps.gaap.quote}</div>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">Margins</div>
+                  <div class="font-semibold">
+                    Gross: ${formatNumber(data.financial_metrics.gross_margin.value, 'percentage')} / 
+                    Operating: ${formatNumber(data.financial_metrics.operating_margin.value, 'percentage')}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cash & Operations -->
+            <div class="bg-gray-50 rounded-lg p-4 shadow-inner">
+              <h4 class="font-semibold text-gray-800 mb-3">Cash & Operations</h4>
+              <div class="space-y-3">
+                <div>
+                  <div class="text-sm text-gray-600">Operating Cash Flow</div>
+                  <div class="font-semibold">${formatNumber(data.financial_metrics.cash_flow.operating.value)}</div>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">Free Cash Flow</div>
+                  <div class="font-semibold">${formatNumber(data.financial_metrics.cash_flow.free.value)}</div>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">Cash Position</div>
+                  <div class="font-semibold">${formatNumber(data.financial_metrics.cash_position.value)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Populate Segments Tab
+        document.getElementById('segments').innerHTML = `
+          <div class="space-y-6">
+            <!-- Business Segments -->
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Business Segments</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${data.segment_performance.map(segment => `
+                  <div class="bg-gray-50 p-4 rounded shadow-inner">
+                    <div class="font-medium text-gray-800">${segment.name}</div>
+                    <div class="text-sm text-gray-600 mt-1">Revenue: ${formatNumber(segment.revenue)}</div>
+                    <div class="text-sm text-gray-600">Growth: ${formatNumber(segment.growth, 'percentage')}</div>
+                    <div class="text-sm text-gray-500 mt-2">${segment.highlights}</div>
+                    <div class="text-xs text-gray-500 mt-1 italic">"${segment.quote}"</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Geographic Performance -->
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Geographic Performance</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${data.geographic_performance.map(region => `
+                  <div class="bg-gray-50 p-4 rounded shadow-inner">
+                    <div class="font-medium text-gray-800">${region.region}</div>
+                    <div class="text-sm text-gray-600 mt-1">Revenue: ${formatNumber(region.revenue)}</div>
+                    <div class="text-sm text-gray-600">Growth: ${formatNumber(region.growth, 'percentage')}</div>
+                    <div class="text-xs text-gray-500 mt-1 italic">"${region.quote}"</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Populate Guidance Tab
+        document.getElementById('guidance').innerHTML = `
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-lg p-4 shadow-inner">
+              <h4 class="font-semibold text-gray-800 mb-3">Next Quarter Guidance</h4>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <div class="text-sm text-gray-600">Revenue</div>
+                  <div class="font-semibold">
+                    ${formatNumber(data.guidance.next_quarter.revenue.low)} - 
+                    ${formatNumber(data.guidance.next_quarter.revenue.high)}
+                  </div>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">EPS</div>
+                  <div class="font-semibold">
+                    ${formatNumber(data.guidance.next_quarter.eps.low)} - 
+                    ${formatNumber(data.guidance.next_quarter.eps.high)}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 shadow-inner">
+              <h4 class="font-semibold text-gray-800 mb-3">Full Year Guidance</h4>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <div class="text-sm text-gray-600">Revenue</div>
+                  <div class="font-semibold">
+                    ${formatNumber(data.guidance.full_year.revenue.low)} - 
+                    ${formatNumber(data.guidance.full_year.revenue.high)}
+                  </div>
+                </div>
+                <div>
+                  <div class="text-sm text-gray-600">EPS</div>
+                  <div class="font-semibold">
+                    ${formatNumber(data.guidance.full_year.eps.low)} - 
+                    ${formatNumber(data.guidance.full_year.eps.high)}
+                  </div>
+                </div>
+              </div>
+              <div class="text-sm text-gray-500 mt-3 italic">"${data.guidance.quote}"</div>
+            </div>
+          </div>
+        `;
+
+        // Populate Strategic Tab
+        document.getElementById('strategic').innerHTML = `
+          <div class="space-y-6">
+            <!-- Strategic Initiatives -->
+            <div class="space-y-4">
+              ${data.strategic_initiatives.map(initiative => `
+                <div class="bg-gray-50 p-4 rounded shadow-inner">
+                  <div class="font-medium text-gray-800">${initiative.initiative}</div>
+                  <div class="text-sm text-gray-600 mt-2">${initiative.description}</div>
+                  <div class="text-sm text-gray-500 mt-1">Status: ${initiative.status}</div>
+                  <div class="text-xs text-gray-500 mt-2 italic">"${initiative.quote}"</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Market Position -->
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Market Position</h4>
+              <div class="bg-gray-50 p-4 rounded shadow-inner">
+                <div class="text-sm text-gray-600">Market Share</div>
+                <div class="font-medium">${formatNumber(data.market_position.market_share.value, 'percentage')}</div>
+                <div class="text-xs text-gray-500 mt-1">${data.market_position.market_share.quote}</div>
+                
+                <div class="mt-4">
+                  <div class="text-sm text-gray-600">Industry Trends</div>
+                  <ul class="list-disc list-inside text-sm text-gray-700 mt-2">
+                    ${data.market_position.industry_trends.map(trend => `
+                      <li>${trend}</li>
+                    `).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Populate Risks Tab
+        document.getElementById('risks').innerHTML = `
+          <div class="space-y-6">
+            <!-- Immediate Risks -->
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Immediate Risks</h4>
+              <div class="space-y-3">
+                ${data.risk_factors.immediate.map(risk => `
+                  <div class="bg-gray-50 p-4 rounded shadow-inner">
+                    <div class="font-medium text-gray-800">${risk.risk}</div>
+                    <div class="text-sm text-gray-600 mt-2">${risk.impact}</div>
+                    <div class="text-xs text-gray-500 mt-2 italic">"${risk.quote}"</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Long-term Risks -->
+            <div>
+              <h4 class="font-semibold text-gray-800 mb-3">Long-term Risks</h4>
+              <div class="space-y-3">
+                ${data.risk_factors.long_term.map(risk => `
+                  <div class="bg-gray-50 p-4 rounded shadow-inner">
+                    <div class="font-medium text-gray-800">${risk.risk}</div>
+                    <div class="text-sm text-gray-600 mt-2">${risk.impact}</div>
+                    <div class="text-xs text-gray-500 mt-2 italic">"${risk.quote}"</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Show the modal
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // Prevent background scrolling
+        trapFocus(modal); // Trap focus within modal for accessibility
+      }
+
+      // Tab Switching Logic
+      function setupTabSwitching() {
+        document.querySelectorAll('.tab-btn').forEach(button => {
+          button.addEventListener('click', () => {
+            // Remove active class from all tabs and hide all contents
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'border-indigo-500', 'text-indigo-600'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            // Add active class to clicked tab and show corresponding content
+            button.classList.add('active', 'border-indigo-500', 'text-indigo-600');
+            document.getElementById(button.dataset.tab).classList.remove('hidden');
+          });
+        });
+      }
+
+      // Download Functions
+      function downloadCSV() {
+        const headers = [
+          "Symbol", "Quarter", "Fiscal Year", "Revenue (B USD)", "Revenue Growth (%)", "EPS (Non-GAAP)", 
+          "Operating Margin (%)"
+        ];
+        
+        const csvContent = [
+          headers.join(","),
+          ...analysisResults.map(r => [
+            `"${r.quarter_info.symbol || ''}"`,
+            `"${r.quarter_info.fiscal_quarter || ''}"`,
+            `"${r.quarter_info.fiscal_year || ''}"`,
+            r.financial_metrics.revenue.value !== null ? r.financial_metrics.revenue.value : '',
+            r.financial_metrics.revenue_growth.value !== null ? r.financial_metrics.revenue_growth.value : '',
+            r.financial_metrics.eps.non_gaap.value !== null ? r.financial_metrics.eps.non_gaap.value : '',
+            r.financial_metrics.operating_margin.value !== null ? r.financial_metrics.operating_margin.value : ''
+          ].join(","))
+        ].join("\n");
+
+        downloadFile(csvContent, "earnings_analysis.csv", "text/csv");
+      }
+
+      function downloadJSON() {
+        const jsonContent = JSON.stringify(analysisResults, null, 2);
+        downloadFile(jsonContent, "earnings_analysis.json", "application/json");
+      }
+
+      function downloadFile(content, filename, type) {
+        const blob = new Blob([content], { type });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+
+      // Event Listeners
+      document.getElementById("analyzeForm").addEventListener("submit", handleFormSubmit);
+      document.getElementById("detailsModal").addEventListener("click", handleModalClick);
+      document.addEventListener("keydown", handleEscapeKey);
+
+      // Event Delegation for View Buttons
+      document.getElementById("resultsBody").addEventListener("click", function(e) {
+        if (e.target.closest(".view-details-btn")) {
+          const button = e.target.closest(".view-details-btn");
+          const data = JSON.parse(decodeURIComponent(button.dataset.details));
+          showDetails(data);
+        }
+      });
+
+      // Form Submit Handler
+      async function handleFormSubmit(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = document.getElementById("submitBtn");
+        const status = document.getElementById("status");
+        
+        // Reset UI state
+        document.getElementById("progressLog").innerHTML = "";
+        document.getElementById("resultsBody").innerHTML = "";
+        document.getElementById("progressSection").classList.remove("hidden");
+        analysisResults = [];
+        
+        submitBtn.disabled = true;
+        status.innerHTML = '<i class="fas fa-circle text-yellow-500 mr-2"></i>Processing';
+        
+        try {
+          const response = await fetch("/analyze", {
+            method: "POST",
+            body: new FormData(form)
+          });
+          
+          if (!response.ok) throw new Error(`Server error: ${response.statusText}`);
+          
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            
+            const lines = decoder.decode(value).split("\n");
+            for (const line of lines) {
+              if (!line) continue;
+              
+              try {
+                const result = JSON.parse(line);
+                handleStreamResult(result, status);
+              } catch (err) {
+                console.error("Failed to parse JSON:", err, "Line:", line);
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          status.innerHTML = '<i class="fas fa-circle text-red-500 mr-2"></i>Error';
+          addLogEntry(`Error: ${error.message}`, "error");
+        } finally {
+          submitBtn.disabled = false;
+        }
+      }
+
+      // Stream Result Handler
+      function handleStreamResult(result, status) {
+        switch (result.status) {
+          case "info":
+            addLogEntry(result.message);
+            break;
+          case "processing":
+            addLogEntry(result.message);
+            break;
+          case "complete":
+            analysisResults.push(result.data);
+            updateResultsTable(result.data);
+            break;
+          case "error":
+            addLogEntry(result.message, "error");
+            break;
+          case "finished":
+            addLogEntry(`Analysis complete. Processed ${result.total} transcripts.`);
+            status.innerHTML = '<i class="fas fa-circle text-green-500 mr-2"></i>Complete';
+            break;
+          default:
+            console.warn("Unknown status:", result.status);
+        }
+      }
+
+      // Modal Event Handlers
+      function handleModalClick(e) {
+        if (e.target.id === "detailsModal") {
+          closeModal();
+        }
+      }
+
+      function handleEscapeKey(e) {
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("detailsModal");
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden'); // Re-enable background scrolling
+        releaseFocus(); // Release focus trap
+      }
+
+      // Handle table sorting
+      function setupTableSorting() {
+        document.querySelectorAll('th[data-sortable="true"]').forEach(header => {
+          header.addEventListener('click', () => {
+            const column = header.dataset.column;
+            const isAsc = header.classList.contains('sort-asc');
+            
+            // Remove sort classes from all headers
+            document.querySelectorAll('th[data-sortable="true"]').forEach(h => {
+              h.classList.remove('sort-asc', 'sort-desc');
+            });
+            
+            // Add sort class to clicked header
+            header.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+            
+            // Sort the table
+            sortTable(column, !isAsc);
+          });
+        });
+      }
+
+      function sortTable(column, asc) {
+        const tbody = document.getElementById('resultsBody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        
+        rows.sort((a, b) => {
+          let aVal, bVal;
+
+          switch(column) {
+            case 'company':
+              aVal = a.children[0].innerText.trim().toLowerCase();
+              bVal = b.children[0].innerText.trim().toLowerCase();
+              break;
+            case 'quarter':
+              aVal = a.children[1].innerText.trim().toLowerCase();
+              bVal = b.children[1].innerText.trim().toLowerCase();
+              break;
+            case 'revenue':
+              aVal = parseFloat(a.children[2].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              bVal = parseFloat(b.children[2].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              break;
+            case 'growth':
+              aVal = parseFloat(a.children[3].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              bVal = parseFloat(b.children[3].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              break;
+            case 'eps':
+              aVal = parseFloat(a.children[4].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              bVal = parseFloat(b.children[4].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              break;
+            case 'margin':
+              aVal = parseFloat(a.children[5].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              bVal = parseFloat(b.children[5].innerText.replace(/[^0-9.-]+/g,"")) || 0;
+              break;
+            default:
+              aVal = 0;
+              bVal = 0;
+          }
+
+          if (aVal < bVal) return asc ? -1 : 1;
+          if (aVal > bVal) return asc ? 1 : -1;
+          return 0;
+        });
+        
+        // Reorder the rows
+        rows.forEach(row => tbody.appendChild(row));
+      }
+
+      // Handle table search/filter
+      function setupTableSearch() {
+        const searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          const rows = document.querySelectorAll('#resultsBody tr');
+          
+          rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+          });
+        });
+      }
+
+      // Focus Trap for Accessibility
+      let focusableElements, firstFocusable, lastFocusable;
+
+      function trapFocus(modal) {
+        focusableElements = modal.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]');
+        firstFocusable = focusableElements[0];
+        lastFocusable = focusableElements[focusableElements.length - 1];
+        firstFocusable.focus();
+
+        function handleTabKey(e) {
+          if (e.key === 'Tab') {
+            if (e.shiftKey) { // Shift + Tab
+              if (document.activeElement === firstFocusable) {
+                e.preventDefault();
+                lastFocusable.focus();
+              }
+            } else { // Tab
+              if (document.activeElement === lastFocusable) {
+                e.preventDefault();
+                firstFocusable.focus();
+              }
+            }
+          }
+        }
+
+        modal.addEventListener('keydown', handleTabKey);
+
+        // Store the handler to remove it later
+        modal.dataset.focusHandler = handleTabKey;
+      }
+
+      function releaseFocus() {
+        const modal = document.getElementById("detailsModal");
+        if (modal.dataset.focusHandler) {
+          modal.removeEventListener('keydown', modal.dataset.focusHandler);
+          delete modal.dataset.focusHandler;
+        }
+      }
+
+      // Initialize the page
+      document.addEventListener('DOMContentLoaded', () => {
+        setupTabSwitching();
+        setupTableSorting();
+        setupTableSearch();
+        setupModalKeyboardNav();
+      });
+
+      // Add keyboard navigation for modal
+      function setupModalKeyboardNav() {
+        const modal = document.getElementById('detailsModal');
+        const closeButton = modal.querySelector('button[onclick="closeModal()"]');
+
+        // Close modal when clicking outside the content
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Close modal on Esc key is already handled globally
+      }
+    </script>
+  </body>
+</html>
