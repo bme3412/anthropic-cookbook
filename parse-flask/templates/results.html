@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Analysis Results - {{ data.company }} Q{{ data.quarter }} {{ data.year }}</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+      body {
+        background-color: #f5f7fa;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+      }
+      .navbar {
+        margin-bottom: 40px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-brand {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+      }
+      .card {
+        margin-bottom: 30px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .card-header {
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-bottom: none;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      .bg-primary-custom {
+        background-color: #004085 !important;
+      }
+      .bg-success-custom {
+        background-color: #155724 !important;
+      }
+      .bg-info-custom {
+        background-color: #0c5460 !important;
+      }
+      .bg-warning-custom {
+        background-color: #856404 !important;
+      }
+      .bg-secondary-custom {
+        background-color: #383d41 !important;
+      }
+      .bg-danger-custom {
+        background-color: #721c24 !important;
+      }
+      .bg-dark-custom {
+        background-color: #343a40 !important;
+      }
+      .table thead th {
+        background-color: #343a40;
+        color: #fff;
+        vertical-align: middle;
+        text-align: center;
+        font-weight: 600;
+      }
+      .table tbody td {
+        vertical-align: middle;
+      }
+      .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(52, 58, 64, 0.05);
+      }
+      .btn-custom {
+        background-color: #343a40;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .btn-custom:hover {
+        background-color: #495057;
+        color: #fff;
+      }
+      .footer {
+        margin-top: 50px;
+        padding: 20px 0;
+        background-color: #343a40;
+        color: #fff;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+      @media (max-width: 576px) {
+        .card-header {
+          font-size: 1rem;
+        }
+        .btn-custom {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-custom">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Transcript Analyzer</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+
+    <div class="container mb-5">
+      <h1 class="text-center mb-5" style="font-family: 'Open Sans', sans-serif;">Earnings Call Analysis</h1>
+
+      <!-- Summary Section -->
+      <div class="card">
+        <div class="card-header bg-primary-custom text-white">
+          Summary
+        </div>
+        <div class="card-body">
+          <p>{{ data.summary }}</p>
+        </div>
+      </div>
+
+      <!-- Key Highlights -->
+      <div class="card">
+        <div class="card-header bg-success-custom text-white">
+          Key Highlights
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            {% for highlight in data.key_highlights %}
+              <li class="list-group-item">{{ highlight }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Financial Metrics -->
+      <div class="card">
+        <div class="card-header bg-info-custom text-white">
+          Financial Metrics
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Metric Name</th>
+                <th>Value</th>
+                <th>Period</th>
+                <th>Year</th>
+                <th>Quarter</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for metric in data.metrics %}
+                <tr>
+                  <td>{{ metric.metric_name }}</td>
+                  <td class="text-right">{{ metric.value }}</td>
+                  <td class="text-center">{{ metric.period }}</td>
+                  <td class="text-center">{{ metric.year }}</td>
+                  <td class="text-center">{{ metric.quarter if metric.quarter else 'N/A' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="card">
+        <div class="card-header bg-warning-custom text-white">
+          Key Performance Indicators (KPIs)
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Context</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for kpi in data.kpis %}
+                <tr>
+                  <td>{{ kpi.name }}</td>
+                  <td class="text-right">{{ kpi.value }}</td>
+                  <td>{{ kpi.context }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Operational Metrics -->
+      <div class="card">
+        <div class="card-header bg-secondary-custom text-white">
+          Operational Metrics
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Metric Name</th>
+                <th>Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for op_metric in data.operational_metrics %}
+                <tr>
+                  <td>{{ op_metric.metric_name }}</td>
+                  <td class="text-right">{{ op_metric.value }}</td>
+                  <td>{{ op_metric.description }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Risk Factors -->
+      <div class="card">
+        <div class="card-header bg-danger-custom text-white">
+          Risk Factors
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            {% for risk in data.risk_factors %}
+              <li class="list-group-item"><strong>{{ risk.risk_name }}:</strong> {{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Strategic Initiatives -->
+      <div class="card">
+        <div class="card-header bg-dark-custom text-white">
+          Strategic Initiatives
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Initiative Name</th>
+                <th>Progress</th>
+                <th>Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for initiative in data.strategic_initiatives %}
+                <tr>
+                  <td>{{ initiative.initiative_name }}</td>
+                  <td>{{ initiative.progress }}</td>
+                  <td>{{ initiative.impact if initiative.impact else 'N/A' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Token Usage and Cost Summary -->
+      <div class="card">
+        <div class="card-header bg-primary-custom text-white">
+          Token Usage and Cost Summary
+        </div>
+        <div class="card-body">
+          <p><strong>Total Tokens Used:</strong> {{ "{:,}".format(data.usage_statistics.total_tokens) }}</p>
+          <p><strong>Total Cost:</strong> ${{ "{:.4f}".format(data.usage_statistics.total_cost) }}</p>
+          
+          <h5>Detailed Usage by Model:</h5>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Input Tokens</th>
+                  <th>Output Tokens</th>
+                  <th>Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for model, stats in data.usage_statistics.detailed_usage.items() %}
+                  <tr>
+                    <td>{{ model }}</td>
+                    <td class="text-right">{{ "{:,}".format(stats.input_tokens) }}</td>
+                    <td class="text-right">{{ "{:,}".format(stats.output_tokens) }}</td>
+                    <td class="text-right">${{ "{:.6f}".format(stats.cost) }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analyze Another Transcript Button -->
+      <div class="text-center my-4">
+        <a href="{{ url_for('index') }}" class="btn btn-custom btn-lg">Analyze Another Transcript</a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <span>&copy; {{ datetime.utcnow().year }} Transcript Analyzer. All rights reserved.</span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,257 @@
+{
+  "company": "MSFT",
+  "date": "2024-12-01T00:00:00",
+  "quarter": 4,
+  "year": 2024,
+  "summary": "Microsoft reported a solid close to its fiscal year 2024, with annual revenue exceeding $245 billion, marking a 15% year-over-year increase. The Microsoft Cloud revenue surpassed $135 billion, growing 23%. The company emphasized its commitment to AI and cloud investments, indicating a strategic shift towards these areas. Commercial bookings were significantly ahead of expectations, increasing 17% and 19% in constant currency, driven by larger long-term contracts. The earnings call highlighted the importance of the Activision acquisition, which contributed to revenue growth but also posed challenges to operating income. The company anticipates continued growth in its cloud and AI sectors, despite potential volatility in bookings due to the nature of larger contracts. Overall, Microsoft remains optimistic about its long-term strategy, focusing on innovation and expanding its user base across various platforms, including Game Pass and Microsoft 365 subscriptions. However, the company acknowledged the impact of scaling AI infrastructure on gross margins and the need to navigate market uncertainties.",
+  "key_highlights": [
+    "Annual revenue exceeded $245 billion, up 15% year-over-year.",
+    "Microsoft Cloud revenue surpassed $135 billion, growing 23%.",
+    "Commercial bookings increased 17% and 19% in constant currency, significantly ahead of expectations.",
+    "Activision acquisition contributed approximately 3 points to revenue growth but was a drag on operating income.",
+    "Microsoft 365 subscriptions grew to 82.5 million, indicating strong momentum in consumer revenue."
+  ],
+  "metrics": [
+    {
+      "metric_name": "Cash flow from operations",
+      "value": 37200000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "Free cash flow",
+      "value": 23300000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "Total cash returned to shareholders",
+      "value": 34000000000.0,
+      "period": "Annual",
+      "year": 2024,
+      "quarter": null
+    },
+    {
+      "metric_name": "Effective tax rate",
+      "value": 19.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "Capital expenditures",
+      "value": 19000000000.0,
+      "period": "Annual",
+      "year": 2024,
+      "quarter": null
+    },
+    {
+      "metric_name": "Operating expenses growth",
+      "value": 5.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "Operating income growth",
+      "value": 12.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "Office consumer revenue growth",
+      "value": 3.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "LinkedIn revenue growth",
+      "value": 10.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    },
+    {
+      "metric_name": "Dynamics revenue growth",
+      "value": 16.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 4
+    }
+  ],
+  "kpis": [
+    {
+      "name": "Azure Growth",
+      "value": "30% YoY increase",
+      "context": "Azure and other cloud services revenue grew 29% and 30% in constant currency."
+    },
+    {
+      "name": "Cloud Revenue",
+      "value": "$28.5 billion",
+      "context": "Intelligent Cloud segment revenue was $28.5 billion, increasing 19% and 20% in constant currency."
+    },
+    {
+      "name": "Office 365 Commercial Revenue Growth",
+      "value": "14% YoY increase",
+      "context": "Office 365 commercial revenue increased 13% and 14% in constant currency."
+    },
+    {
+      "name": "LinkedIn Revenue Growth",
+      "value": "10% YoY increase",
+      "context": "LinkedIn revenue increased 10% and 9% in constant currency."
+    },
+    {
+      "name": "Dynamics 365 Revenue Growth",
+      "value": "19% YoY increase",
+      "context": "Dynamics revenue grew 16% driven by Dynamics 365 which grew 19% and 20% in constant currency."
+    },
+    {
+      "name": "Microsoft 365 Subscriptions",
+      "value": "82.5 million",
+      "context": "Microsoft 365 subscriptions grew 10% to 82.5 million."
+    },
+    {
+      "name": "Enterprise Mobility and Security Installed Base",
+      "value": "281 million seats",
+      "context": "The enterprise mobility and security installed base grew 10% to over 281 million seats."
+    },
+    {
+      "name": "Operating Income Growth",
+      "value": "12% YoY increase",
+      "context": "Operating income increased 12% and 13% in constant currency."
+    },
+    {
+      "name": "Operating Expenses Growth",
+      "value": "5% YoY increase",
+      "context": "Operating expenses increased 5%."
+    },
+    {
+      "name": "Gross Margin Percentage",
+      "value": "70%",
+      "context": "Microsoft Cloud gross margin percentage should be roughly 70%, down year-over-year."
+    }
+  ],
+  "operational_metrics": [
+    {
+      "metric_name": "Office 365 Commercial Revenue Growth",
+      "value": 13.0,
+      "description": "Percentage growth in Office 365 commercial revenue in constant currency."
+    },
+    {
+      "metric_name": "Paid Office 365 Commercial Seats Growth",
+      "value": 7.0,
+      "description": "Year-over-year growth in paid Office 365 commercial seats."
+    },
+    {
+      "metric_name": "Dynamics 365 Revenue Growth",
+      "value": 19.0,
+      "description": "Percentage growth in Dynamics 365 revenue in constant currency."
+    },
+    {
+      "metric_name": "Azure Revenue Growth",
+      "value": 29.0,
+      "description": "Percentage growth in Azure and other cloud services revenue in constant currency."
+    },
+    {
+      "metric_name": "Cash Flow from Operations",
+      "value": 119.0,
+      "description": "Total cash flow from operations for the full year in billions."
+    },
+    {
+      "metric_name": "Free Cash Flow",
+      "value": 23.3,
+      "description": "Free cash flow for the quarter in billions."
+    },
+    {
+      "metric_name": "Operating Expenses Growth",
+      "value": 5.0,
+      "description": "Percentage increase in operating expenses."
+    },
+    {
+      "metric_name": "Operating Income Growth",
+      "value": 12.0,
+      "description": "Percentage increase in operating income in constant currency."
+    },
+    {
+      "metric_name": "Effective Tax Rate",
+      "value": 19.0,
+      "description": "Expected effective tax rate for FY2025."
+    },
+    {
+      "metric_name": "LinkedIn Revenue Growth",
+      "value": 10.0,
+      "description": "Percentage growth in LinkedIn revenue in constant currency."
+    },
+    {
+      "metric_name": "Segment Gross Margin Percentage Decrease",
+      "value": 1.0,
+      "description": "Decrease in gross margin percentage year-over-year."
+    },
+    {
+      "metric_name": "Xbox Content Services Revenue Growth",
+      "value": 61.0,
+      "description": "Percentage growth in Xbox content services revenue."
+    }
+  ],
+  "risk_factors": [
+    {
+      "risk_name": "Foreign Exchange Risk",
+      "description": "Assuming current rates remain stable, we expect FX to have no meaningful impact to full-year revenue, COGS, or operating expense growth."
+    },
+    {
+      "risk_name": "Demand Signal Dependency",
+      "description": "Capital expenditures are dependent on demand signals and adoption of our services that will be managed through the year."
+    },
+    {
+      "risk_name": "Operational Uncertainty",
+      "description": "Actual results could materially differ because of factors discussed in today's earnings press release, in the comments made during this conference call, and in the risk factor section of our Form 10-K, Forms 10-Q, and other reports and filings with the Securities and Exchange Commission."
+    }
+  ],
+  "strategic_initiatives": [
+    {
+      "initiative_name": "AI Platform Shift",
+      "progress": "Expanded datacenter footprint and investments across four continents.",
+      "impact": "Driving growth for the next decade and beyond."
+    },
+    {
+      "initiative_name": "M365 Copilot",
+      "progress": "Achieved a growth rate faster than any previous generation of software.",
+      "impact": "Recurring customers and increased seat purchases."
+    },
+    {
+      "initiative_name": "Dynamics 365 with GenAI",
+      "progress": "Gained share and transformed business applications.",
+      "impact": "Significant savings in customer support and contact center operations."
+    },
+    {
+      "initiative_name": "GitHub Copilot",
+      "progress": "Adopted by over 77,000 organizations, up 180% year-over-year.",
+      "impact": "Contributed over 40% to GitHub revenue growth."
+    },
+    {
+      "initiative_name": "Power Platform AI Integration",
+      "progress": "Over 480,000 organizations have used AI-powered capabilities, up 45% quarter-over-quarter.",
+      "impact": "Increased monthly active users to 48 million, up 40% year-over-year."
+    }
+  ],
+  "usage_statistics": {
+    "total_cost": 0.0018,
+    "total_tokens": 16277,
+    "detailed_usage": {
+      "gpt-4o-mini": {
+        "input_tokens": 830,
+        "output_tokens": 2434,
+        "cost": 0.0015849000000000002
+      },
+      "text-embedding-3-small": {
+        "input_tokens": 13013,
+        "output_tokens": 0,
+        "cost": 0.00026026
+      }
+    }
+  }
+}

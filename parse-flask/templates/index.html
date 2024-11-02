@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Earnings Call Transcript Analyzer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Earnings Call Transcript Analyzer</h1>
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" role="alert">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <div class="form-group">
+          <label for="symbol">Company Symbol</label>
+          <input type="text" class="form-control" id="symbol" name="symbol" placeholder="Enter stock symbol (e.g., MSFT)" value="MSFT" required>
+        </div>
+        <div class="form-group">
+          <label for="quarter">Quarter</label>
+          <input type="number" class="form-control" id="quarter" name="quarter" placeholder="Enter quarter number (1-4)" min="1" max="4" required>
+        </div>
+        <div class="form-group">
+          <label for="year">Fiscal Year</label>
+          <input type="number" class="form-control" id="year" name="year" placeholder="Enter fiscal year (e.g., 2025)" min="2000" max="{{ current_year }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Analyze Transcript</button>
+      </form>
+    </div>
+  </body>
+</html>
