@@ -1,0 +1,211 @@
+{
+  "company": "AAPL",
+  "date": "2024-09-01T00:00:00",
+  "quarter": 3,
+  "year": 2024,
+  "summary": "In the Q3 Fiscal Year 2024 earnings call, Apple reported a record revenue of $85.8 billion, marking a 5% increase year-over-year, with earnings per share (EPS) growing to $1.40, an 11% rise. The company achieved quarterly revenue records in over two dozen countries, indicating strong global demand. Strategic initiatives such as the rollout of Apple Intelligence were discussed, which aims to enhance app capabilities and drive engagement in the services sector. The company anticipates continued growth in services revenue, projecting double-digit growth similar to previous quarters. However, Apple acknowledged potential headwinds from foreign exchange impacts and macroeconomic conditions, which could affect future performance. Notable updates included the return to growth for iPad in Greater China and the introduction of new content for Apple TV+ and Apple Arcade. Challenges mentioned included component price inflation and the need to manage gross margins amid a fluctuating component environment.",
+  "key_highlights": [
+    "Apple reported a record revenue of $85.8 billion for Q3 FY 2024, up 5% year-over-year.",
+    "Earnings per share (EPS) increased to $1.40, setting a June quarter record.",
+    "The rollout of Apple Intelligence was initiated, aimed at enhancing app capabilities.",
+    "Services revenue is expected to grow double digits, similar to previous quarters.",
+    "Challenges include foreign exchange impacts and component price inflation affecting margins."
+  ],
+  "metrics": [
+    {
+      "metric_name": "Revenue",
+      "value": 85800.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "EPS",
+      "value": 1.4,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Net Income",
+      "value": 21400.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Operating Cash Flow",
+      "value": 28900.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "iPhone Revenue",
+      "value": 39300.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Wearables, Home, and Accessories Revenue",
+      "value": 8100.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Services Revenue",
+      "value": 24200.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Gross Margin",
+      "value": 45.5,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Operating Expenses",
+      "value": 14300.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Total Debt",
+      "value": 101000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Net Cash",
+      "value": 52000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Dividends and Equivalents",
+      "value": 3900.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    },
+    {
+      "metric_name": "Open Market Repurchases",
+      "value": 26000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 3
+    }
+  ],
+  "kpis": [
+    {
+      "name": "Total Revenue",
+      "value": "$85.8 billion",
+      "context": "New June quarter revenue record, up 5% from a year ago"
+    },
+    {
+      "name": "iPhone Revenue",
+      "value": "$39.3 billion",
+      "context": "iPhone revenue down 1% year-over-year but grew on a constant currency basis"
+    },
+    {
+      "name": "iPad Revenue",
+      "value": "$7.2 billion",
+      "context": "iPad revenue 24% higher year-over-year"
+    },
+    {
+      "name": "Wearables, Home and Accessories Revenue",
+      "value": "$8.1 billion",
+      "context": "Revenue down 2% from a year ago"
+    },
+    {
+      "name": "Services Revenue",
+      "value": "$24.2 billion",
+      "context": "All-time revenue record, up 14% year-over-year"
+    },
+    {
+      "name": "Gross Margin",
+      "value": "46.3%",
+      "context": "Company gross margin near the high end of guidance range, down 30 basis points sequentially"
+    },
+    {
+      "name": "Operating Expenses",
+      "value": "$14.3 billion",
+      "context": "Operating expenses at the low end of guidance range, up 7% year-over-year"
+    },
+    {
+      "name": "Net Income",
+      "value": "$21.4 billion",
+      "context": "Net income set a June quarter record"
+    },
+    {
+      "name": "Diluted EPS",
+      "value": "$1.40",
+      "context": "Diluted EPS up 11% year-over-year, setting a June quarter record"
+    },
+    {
+      "name": "Active Installed Base of iPhone",
+      "value": "New all-time high",
+      "context": "Active installed base grew in total and in every geographic segment"
+    },
+    {
+      "name": "Paid Subscriptions",
+      "value": "Over 1 billion",
+      "context": "Paid subscriptions more than double the number from four years ago"
+    },
+    {
+      "name": "Operating Cash Flow",
+      "value": "$28.9 billion",
+      "context": "Operating cash flow also a June quarter record"
+    }
+  ],
+  "operational_metrics": [],
+  "risk_factors": [
+    {
+      "risk_name": "Macroeconomic Conditions",
+      "description": "Potential impact of macroeconomic conditions on the company's business and results of operations."
+    },
+    {
+      "risk_name": "Foreign Exchange Headwinds",
+      "description": "Foreign exchange fluctuations are expected to have a negative impact on revenue."
+    },
+    {
+      "risk_name": "Competitive Environment",
+      "description": "The competitive environment, particularly in China, remains highly competitive and could affect market share."
+    },
+    {
+      "risk_name": "Component Price Inflation",
+      "description": "Inflation in component prices may impact gross margins."
+    }
+  ],
+  "strategic_initiatives": [
+    {
+      "initiative_name": "Apple Intelligence",
+      "progress": "Started the rollout with developers and released some features.",
+      "impact": "Expected to enable developers to enhance their apps and provide compelling reasons for consumer upgrades."
+    }
+  ],
+  "usage_statistics": {
+    "total_cost": 0.0017,
+    "total_tokens": 15178,
+    "detailed_usage": {
+      "gpt-4o-mini": {
+        "input_tokens": 752,
+        "output_tokens": 2309,
+        "cost": 0.0014981999999999999
+      },
+      "text-embedding-3-small": {
+        "input_tokens": 12117,
+        "output_tokens": 0,
+        "cost": 0.00024234000000000004
+      }
+    }
+  }
+}

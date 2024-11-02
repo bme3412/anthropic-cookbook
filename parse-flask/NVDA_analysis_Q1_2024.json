@@ -1,0 +1,271 @@
+{
+  "company": "NVDA",
+  "date": "2024-03-01T00:00:00",
+  "quarter": 1,
+  "year": 2024,
+  "summary": "NVIDIA reported a strong financial performance for the first quarter of fiscal 2024, with revenue reaching $7.19 billion, marking a 19% sequential increase but a 13% year-on-year decline. The growth was primarily driven by record data center revenue of $4.28 billion, which was up 18% sequentially and 14% year-on-year, fueled by the rising demand for accelerated computing, particularly in generative AI applications. The company is strategically focusing on expanding its data center capabilities and partnerships, including collaborations with major cloud service providers and enterprises to enhance its AI offerings. Looking ahead, NVIDIA expects total revenue for the second quarter to be around $11 billion, largely driven by continued demand for generative AI and large language models. However, the company acknowledged potential supply chain challenges that could impact growth in the latter half of the year. Notable updates included the introduction of the DGX Cloud offering, which aims to provide a high-performance computing stack for AI applications. Overall, while NVIDIA is well-positioned in a growing market, it faces risks related to competition and supply chain constraints.",
+  "key_highlights": [
+    "Q1 revenue of $7.19 billion, up 19% sequentially but down 13% year-on-year.",
+    "Record data center revenue of $4.28 billion, driven by demand for accelerated computing and generative AI.",
+    "Expecting Q2 revenue to be around $11 billion, largely due to strong demand for generative AI.",
+    "Introduction of DGX Cloud offering to enhance AI computing capabilities.",
+    "Acknowledgment of potential supply chain challenges that may impact future growth."
+  ],
+  "metrics": [
+    {
+      "metric_name": "Q1 Revenue",
+      "value": 7190000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 1,
+      "description": "Total revenue for the first quarter of fiscal 2024."
+    },
+    {
+      "metric_name": "Data Center Revenue",
+      "value": 4280000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 1,
+      "description": "Revenue from the data center segment for Q1 fiscal 2024."
+    },
+    {
+      "metric_name": "Total Revenue Outlook Q2",
+      "value": 11000000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected total revenue for the second quarter of fiscal 2024."
+    },
+    {
+      "metric_name": "GAAP Gross Margin",
+      "value": 68.6,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected GAAP gross margin for Q2 fiscal 2024."
+    },
+    {
+      "metric_name": "Non-GAAP Gross Margin",
+      "value": 70.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected non-GAAP gross margin for Q2 fiscal 2024."
+    },
+    {
+      "metric_name": "GAAP Operating Expenses",
+      "value": 2710000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected GAAP operating expenses for Q2 fiscal 2024."
+    },
+    {
+      "metric_name": "Non-GAAP Operating Expenses",
+      "value": 1900000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected non-GAAP operating expenses for Q2 fiscal 2024."
+    },
+    {
+      "metric_name": "GAAP Other Income",
+      "value": 90000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected GAAP other income for Q2 fiscal 2024."
+    },
+    {
+      "metric_name": "GAAP Tax Rate",
+      "value": 14.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected GAAP tax rate for Q2 fiscal 2024."
+    },
+    {
+      "metric_name": "Capital Expenditures",
+      "value": 325000000.0,
+      "period": "Quarterly",
+      "year": 2024,
+      "quarter": 2,
+      "description": "Expected capital expenditures for Q2 fiscal 2024."
+    }
+  ],
+  "kpis": [
+    {
+      "name": "Q1 Revenue",
+      "value": "$7.19 billion",
+      "context": "Q1 revenue was $7.19 billion, up 19% sequentially and down 13% year-on-year."
+    },
+    {
+      "name": "Data Center Revenue",
+      "value": "$4.28 billion",
+      "context": "Record data center revenue of $4.28 billion was up 18% sequentially and up 14% year-on-year."
+    },
+    {
+      "name": "Gaming Revenue",
+      "value": "$2.24 billion",
+      "context": "Gaming revenue of $2.24 billion was up 22% sequentially and down 38% year-on-year."
+    },
+    {
+      "name": "Pro Visualization Revenue",
+      "value": "$295 million",
+      "context": "Pro Visualization revenue of $295 million was up 31% sequentially and down 53% year-on-year."
+    },
+    {
+      "name": "Automotive Revenue",
+      "value": "$296 million",
+      "context": "Automotive revenue was $296 million, up 1% sequentially and up 114% from a year ago."
+    },
+    {
+      "name": "Expected Q2 Revenue",
+      "value": "$11 billion",
+      "context": "Total revenue is expected to be $11 billion, plus or minus 2% for Q2."
+    },
+    {
+      "name": "GAAP Gross Margin",
+      "value": "68.6%",
+      "context": "GAAP gross margin is expected to be 68.6%, plus or minus 50 basis points."
+    },
+    {
+      "name": "Non-GAAP Gross Margin",
+      "value": "70%",
+      "context": "Non-GAAP gross margin is expected to be 70%, plus or minus 50 basis points."
+    },
+    {
+      "name": "Operating Expenses (GAAP)",
+      "value": "$2.71 billion",
+      "context": "GAAP operating expenses are expected to be approximately $2.71 billion."
+    },
+    {
+      "name": "Operating Expenses (Non-GAAP)",
+      "value": "$1.9 billion",
+      "context": "Non-GAAP operating expenses are expected to be approximately $1.9 billion."
+    },
+    {
+      "name": "Shareholder Return",
+      "value": "$99 million",
+      "context": "Returned $99 million to shareholders in the form of cash dividends."
+    },
+    {
+      "name": "Automotive Design Win Pipeline",
+      "value": "$14 billion",
+      "context": "Automotive design win pipeline over the next six years now stands at $14 billion."
+    }
+  ],
+  "operational_metrics": [
+    {
+      "metric_name": "Q1 Revenue",
+      "value": "$7.19 billion",
+      "description": "Revenue for the first quarter, up 19% sequentially and down 13% year-on-year"
+    },
+    {
+      "metric_name": "Data Center Revenue",
+      "value": "$4.28 billion",
+      "description": "Record revenue for data center, up 18% sequentially and up 14% year-on-year"
+    },
+    {
+      "metric_name": "Total Revenue Outlook for Q2",
+      "value": "$11 billion, plus or minus 2%",
+      "description": "Expected total revenue for the second quarter"
+    },
+    {
+      "metric_name": "GAAP Gross Margin",
+      "value": "68.6%, plus or minus 50 basis points",
+      "description": "Expected GAAP gross margin for the second quarter"
+    },
+    {
+      "metric_name": "Non-GAAP Gross Margin",
+      "value": "70%, plus or minus 50 basis points",
+      "description": "Expected non-GAAP gross margin for the second quarter"
+    },
+    {
+      "metric_name": "GAAP Operating Expenses",
+      "value": "$2.71 billion",
+      "description": "Expected GAAP operating expenses for the second quarter"
+    },
+    {
+      "metric_name": "Non-GAAP Operating Expenses",
+      "value": "$1.9 billion",
+      "description": "Expected non-GAAP operating expenses for the second quarter"
+    },
+    {
+      "metric_name": "GAAP Tax Rate",
+      "value": "14%, plus or minus 1%",
+      "description": "Expected GAAP tax rate for the second quarter"
+    },
+    {
+      "metric_name": "Capital Expenditures",
+      "value": "$300 million to $350 million",
+      "description": "Expected capital expenditures for the second quarter"
+    },
+    {
+      "metric_name": "Share Repurchase Authorization",
+      "value": "$7 billion",
+      "description": "Remaining amount under share repurchase authorization through December 2023"
+    }
+  ],
+  "risk_factors": [
+    {
+      "risk_name": "Forward-looking Statements",
+      "description": "Statements made during the call are based on current expectations and are subject to significant risks and uncertainties that could cause actual results to differ materially."
+    },
+    {
+      "risk_name": "Generative AI Demand",
+      "description": "The rapid growth in demand for generative AI could lead to supply chain challenges and affect the company's ability to meet customer needs."
+    },
+    {
+      "risk_name": "Competitive Landscape",
+      "description": "Increased demand may invite more competition in terms of custom ASICs and other GPU solutions, potentially impacting market share."
+    },
+    {
+      "risk_name": "Supply Chain Constraints",
+      "description": "The ability to sustain growth in data center sales may be limited by supply chain issues, affecting future revenue."
+    }
+  ],
+  "strategic_initiatives": [
+    {
+      "initiative_name": "Generative AI and Large Language Models",
+      "progress": "Driving a surge in demand across various sectors including consumer internet companies, CSPs, enterprises, and AI start-ups.",
+      "impact": "Extended data center visibility and increased revenue growth."
+    },
+    {
+      "initiative_name": "NVIDIA AI Enterprise",
+      "progress": "Supports and continuously patches over 4,000 software packages for enterprise deployment.",
+      "impact": "Facilitates secure and supported deployment of AI in various cloud and on-prem environments."
+    },
+    {
+      "initiative_name": "DGX H100 AI System",
+      "progress": "Started shipping the Hopper generation AI system for on-prem deployment.",
+      "impact": "Enables customers to leverage advanced AI capabilities in their operations."
+    },
+    {
+      "initiative_name": "DGX Cloud Partnership",
+      "progress": "Launched DGX Cloud through partnerships with Microsoft Azure, Google Cloud, and Oracle Cloud Infrastructure.",
+      "impact": "Provides scalable AI solutions to a broader range of customers."
+    },
+    {
+      "initiative_name": "Automotive Design Win Pipeline",
+      "progress": "Increased pipeline to $14 billion, up from $11 billion a year ago.",
+      "impact": "Indicates strong future growth potential in the automotive sector."
+    }
+  ],
+  "usage_statistics": {
+    "total_cost": 0.0019,
+    "total_tokens": 17145,
+    "detailed_usage": {
+      "gpt-4o-mini": {
+        "input_tokens": 763,
+        "output_tokens": 2524,
+        "cost": 0.0016288499999999998
+      },
+      "text-embedding-3-small": {
+        "input_tokens": 13858,
+        "output_tokens": 0,
+        "cost": 0.00027716000000000004
+      }
+    }
+  }
+}

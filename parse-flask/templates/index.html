@@ -2,39 +2,211 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Earnings Call Transcript Analyzer</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+      body {
+        background-color: #f5f7fa;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar {
+        margin-bottom: 40px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+      }
+
+      .bg-dark-custom {
+        background-color: #343a40 !important;
+      }
+
+      .main-content {
+        flex: 1;
+      }
+
+      .card {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+      }
+
+      .card-header {
+        background-color: #004085;
+        color: white;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        border-top-left-radius: 8px !important;
+        border-top-right-radius: 8px !important;
+        border-bottom: none;
+        padding: 1rem 1.5rem;
+      }
+
+      .card-body {
+        padding: 2rem;
+      }
+
+      .form-group label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-control {
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      }
+
+      .form-control:focus {
+        border-color: #004085;
+        box-shadow: 0 0 0 0.2rem rgba(0, 64, 133, 0.25);
+      }
+
+      .btn-analyze {
+        background-color: #004085;
+        border: none;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: background-color 0.2s ease-in-out;
+      }
+
+      .btn-analyze:hover {
+        background-color: #002752;
+      }
+
+      .alert {
+        border-radius: 6px;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .footer {
+        margin-top: auto;
+        padding: 20px 0;
+        background-color: #343a40;
+        color: #fff;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 576px) {
+        .card-body {
+          padding: 1.5rem;
+        }
+        
+        .btn-analyze {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="container mt-5">
-      <h1 class="mb-4">Earnings Call Transcript Analyzer</h1>
-      
-      {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }}" role="alert">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark-custom">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Transcript Analyzer</a>
+      </div>
+    </nav>
 
-      <form method="POST">
-        <div class="form-group">
-          <label for="symbol">Company Symbol</label>
-          <input type="text" class="form-control" id="symbol" name="symbol" placeholder="Enter stock symbol (e.g., MSFT)" value="MSFT" required>
+    <div class="main-content">
+      <div class="container">
+        <h1 class="text-center mb-5" style="font-family: 'Open Sans', sans-serif;">Earnings Call Analyzer</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="card">
+          <div class="card-header">
+            Analysis Parameters
+          </div>
+          <div class="card-body">
+            <form method="POST">
+              <div class="form-group">
+                <label for="symbol">Company Symbol</label>
+                <input type="text" 
+                       class="form-control" 
+                       id="symbol" 
+                       name="symbol" 
+                       placeholder="Enter stock symbol (e.g., MSFT, AAPL, GOOGL)" 
+                       value="MSFT" 
+                       required>
+              </div>
+
+              <div class="form-group">
+                <label for="quarter">Quarter</label>
+                <input type="number" 
+                       class="form-control" 
+                       id="quarter" 
+                       name="quarter" 
+                       placeholder="Enter quarter number (1-4)" 
+                       min="1" 
+                       max="4" 
+                       required>
+              </div>
+
+              <div class="form-group">
+                <label for="year">Fiscal Year</label>
+                <input type="number" 
+                       class="form-control" 
+                       id="year" 
+                       name="year" 
+                       placeholder="Enter fiscal year" 
+                       min="2000" 
+                       max="2024" 
+                       required>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-analyze">
+                  Analyze Transcript
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="quarter">Quarter</label>
-          <input type="number" class="form-control" id="quarter" name="quarter" placeholder="Enter quarter number (1-4)" min="1" max="4" required>
-        </div>
-        <div class="form-group">
-          <label for="year">Fiscal Year</label>
-          <input type="number" class="form-control" id="year" name="year" placeholder="Enter fiscal year (e.g., 2025)" min="2000" max="{{ current_year }}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Analyze Transcript</button>
-      </form>
+      </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+      <div class="container">
+        <span>&copy; {{ datetime.utcnow().year }} Transcript Analyzer. All rights reserved.</span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
