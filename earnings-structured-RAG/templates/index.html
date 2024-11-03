@@ -1,0 +1,286 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings Call RAG</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .loader {
+            border-top-color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <h1 class="text-2xl font-semibold text-gray-900">Earnings Call RAG</h1>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-white shadow sm:rounded-lg p-6">
+            <!-- Search Form -->
+            <form id="searchForm" class="space-y-6">
+                <div>
+                    <label for="ticker" class="block text-sm font-medium text-gray-700">Stock Ticker</label>
+                    <input 
+                        type="text" 
+                        name="ticker"
+                        id="ticker"
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        placeholder="Enter ticker (e.g., MSFT, AAPL)"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label for="query" class="block text-sm font-medium text-gray-700">Query</label>
+                    <div class="mt-1">
+                        <input 
+                            type="text" 
+                            name="query"
+                            id="query"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            placeholder="Ask about earnings, revenue, growth, bull case, bear case..."
+                            required
+                        >
+                        <p class="mt-1 text-xs text-gray-500">
+                            Tip: Start with "bull case" or "bear case" for investment thesis analysis
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                        <input 
+                            type="date" 
+                            name="start_date" 
+                            id="start_date" 
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            placeholder="YYYY-MM-DD"
+                        >
+                    </div>
+                    <div>
+                        <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
+                        <input 
+                            type="date" 
+                            name="end_date" 
+                            id="end_date" 
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            placeholder="YYYY-MM-DD"
+                        >
+                    </div>
+                </div>
+
+                <button 
+                    type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                    Search
+                </button>
+            </form>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="mt-6 bg-red-50 p-4 rounded-md hidden">
+                <p class="text-sm text-red-700"></p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="results" class="mt-8 space-y-6 hidden">
+                <h2 class="text-xl font-semibold text-gray-800"></h2>
+                <div id="resultsContainer" class="space-y-6"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Indicator -->
+    <div id="loading" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const results = document.getElementById('results');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            loading.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            results.classList.add('hidden');
+            resultsContainer.innerHTML = ''; // Clear previous results
+            
+            const formData = {
+                ticker: document.getElementById('ticker').value.trim().toUpperCase(),
+                query: document.getElementById('query').value.trim(),
+                startDate: document.getElementById('start_date').value,
+                endDate: document.getElementById('end_date').value
+            };
+
+            console.log('Form Data:', formData); // Debugging
+            
+            try {
+                const processResponse = await fetch('/api/process_ticker', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ticker: formData.ticker })
+                });
+
+                if (!processResponse.ok) {
+                    const errorData = await processResponse.json();
+                    throw new Error(errorData.message || 'Failed to process ticker');
+                }
+
+                const queryResponse = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!queryResponse.ok) {
+                    const errorData = await queryResponse.json();
+                    throw new Error(errorData.error || 'Failed to fetch results');
+                }
+
+                const data = await queryResponse.json();
+                console.log('Query Response Data:', data); // Debugging
+                
+                // Update results heading
+                results.querySelector('h2').textContent = `Results for "${formData.ticker}"`;
+                
+                // Handle both regular and thesis results
+                if (data.bull_case || data.bear_case) {  // Updated keys
+                    // Investment thesis display
+                    if ((data.bull_case && data.bull_case.length > 0) || (data.bear_case && data.bear_case.length > 0)) {
+                        resultsContainer.innerHTML = `
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-green-50 rounded-lg p-6 shadow-sm">
+                                    <h3 class="text-lg font-semibold text-green-800 mb-4">Bull Case</h3>
+                                    <div class="space-y-4">
+                                        ${(data.bull_case || []).map(point => `
+                                            <div class="bg-white rounded p-4 shadow-sm">
+                                                <div class="flex items-center space-x-2 mb-2">
+                                                    <span class="text-sm font-medium">${point.speaker.name}</span>
+                                                    <span class="text-xs text-gray-500">(${point.speaker.role})</span>
+                                                </div>
+                                                <p class="text-sm text-gray-800">${point.points}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-red-50 rounded-lg p-6 shadow-sm">
+                                    <h3 class="text-lg font-semibold text-red-800 mb-4">Bear Case</h3>
+                                    <div class="space-y-4">
+                                        ${(data.bear_case || []).map(point => `
+                                            <div class="bg-white rounded p-4 shadow-sm">
+                                                <div class="flex items-center space-x-2 mb-2">
+                                                    <span class="text-sm font-medium">${point.speaker.name}</span>
+                                                    <span class="text-xs text-gray-500">(${point.speaker.role})</span>
+                                                </div>
+                                                <p class="text-sm text-gray-800">${point.points}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // No bull or bear points found
+                        resultsContainer.innerHTML = `<p class="text-gray-700">No bull or bear case points found for this query.</p>`;
+                    }
+                } else {
+                    // Regular search results
+                    if (data.length === 0) {
+                        resultsContainer.innerHTML = `<p class="text-gray-700">No results found for this query.</p>`;
+                    } else {
+                        resultsContainer.innerHTML = data.map(result => `
+                            <div class="bg-white rounded-lg p-6 shadow-sm space-y-4">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4">
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-sm">
+                                            ${result.speaker?.role || 'Speaker'}
+                                        </span>
+                                        <span class="text-gray-600">${result.speaker?.name || 'Unknown'}</span>
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        ${result.date || 'No date'} | Q${result.quarter || '?'} ${result.year || ''}
+                                    </div>
+                                </div>
+                                
+                                ${result.summary ? `
+                                    <div class="bg-blue-50 rounded p-4 border-l-4 border-blue-500">
+                                        <p class="text-sm text-blue-900 font-medium">${result.summary}</p>
+                                    </div>
+                                ` : ''}
+                                
+                                <div class="space-y-2">
+                                    <div class="flex items-center">
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-blue-600 h-2 rounded-full" 
+                                                 style="width: ${(result.score || 0) * 100}%">
+                                            </div>
+                                        </div>
+                                        <span class="ml-2 text-sm text-gray-600">
+                                            ${((result.score || 0) * 100).toFixed(1)}%
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="bg-gray-50 rounded p-4">
+                                        <p class="text-gray-900">${result.text || 'No content'}</p>
+                                    </div>
+                                </div>
+
+                                ${result.context && result.context.length > 0 ? `
+                                    <div class="mt-4">
+                                        <h4 class="text-sm font-medium text-gray-700 mb-2">Related Context:</h4>
+                                        <div class="space-y-2">
+                                            ${result.context.map(ctx => `
+                                                <div class="bg-gray-50 rounded p-3 border-l-4 ${
+                                                    ctx.position === 'previous' ? 'border-gray-300' : 'border-gray-500'
+                                                }">
+                                                    <div class="flex items-center space-x-2 mb-1">
+                                                        <span class="text-xs font-medium text-gray-500">
+                                                            ${ctx.position === 'previous' ? 'Previous' : 'Next'}
+                                                        </span>
+                                                        <span class="text-sm font-medium">
+                                                            ${ctx.speaker?.name || 'Unknown'}
+                                                        </span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600">${ctx.content || ''}</p>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                results.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.querySelector('p').textContent = error.message;
+                errorMessage.classList.remove('hidden');
+            } finally {
+                loading.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
