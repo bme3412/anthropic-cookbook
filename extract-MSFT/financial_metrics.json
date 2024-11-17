@@ -1,0 +1,39 @@
+{
+  "revenue": 65585,
+  "operating_income": 30552,
+  "net_income": 24667,
+  "earnings_per_share": 3.3,
+  "segment_revenue": {
+    "Productivity and Business Processes": 28317,
+    "Intelligent Cloud": 24092,
+    "More Personal Computing": 13176
+  },
+  "cloud_metrics": {
+    "Microsoft Cloud Revenue": 38900,
+    "Azure Growth": 33,
+    "Microsoft Cloud Growth": 22,
+    "Microsoft Cloud Growth Constant Currency": 22,
+    "M365 Commercial Growth": 13,
+    "M365 Commercial Growth Constant Currency": 14,
+    "M365 Commercial Cloud Growth": 15,
+    "M365 Commercial Cloud Growth Constant Currency": 16,
+    "M365 Consumer Growth": 5,
+    "M365 Consumer Growth Constant Currency": 6,
+    "M365 Consumer Cloud Growth": 6,
+    "M365 Consumer Cloud Growth Constant Currency": 7,
+    "LinkedIn Growth": 10,
+    "LinkedIn Growth Constant Currency": 9,
+    "Dynamics Growth": 14,
+    "Dynamics Growth Constant Currency": 14
+  },
+  "cash_flow_metrics": {
+    "Operating Cash Flow": 34180,
+    "Capital Expenditure": 14923
+  },
+  "balance_sheet_metrics": {
+    "Cash and Investments": 78428,
+    "Total Assets": 523013,
+    "Total Liabilities": 235290,
+    "Stockholders Equity": 287723
+  }
+}
